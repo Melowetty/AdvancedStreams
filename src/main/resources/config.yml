@@ -1,0 +1,8 @@
+generals:
+  language: ru_RU
+apis:
+  vk:
+  twitch:
+  youtube:
+settings-streams:
+  max-count-streams: 27
