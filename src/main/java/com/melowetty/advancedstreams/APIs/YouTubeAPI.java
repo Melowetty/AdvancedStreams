@@ -7,8 +7,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import java.util.Date;
-
 public class YouTubeAPI extends AbstractAPI {
     public YouTubeAPI(String id) {
         this.API_key = AdvancedStreams.getInstance().getSettingsManager().getYouTubeKey();

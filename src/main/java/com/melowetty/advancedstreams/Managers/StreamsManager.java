@@ -1,7 +1,10 @@
 package com.melowetty.advancedstreams.Managers;
 
 import com.melowetty.advancedstreams.*;
+import com.melowetty.advancedstreams.Events.AddStreamEvent;
+import com.melowetty.advancedstreams.Events.RemoveStreamEvent;
 import com.melowetty.advancedstreams.Utils.URLHelper;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -27,11 +30,17 @@ public class StreamsManager {
         Stream stream = new Stream(youtuber, link, title, streamPlatform);
         streams.put(youtuber.getName().toLowerCase(),stream);
         plugin.fullRefreshMenu();
+        AddStreamEvent event = new AddStreamEvent(stream);
+        Bukkit.getServer().getPluginManager().callEvent(event);
         return ResponseStatus.SUCCESS;
     }
     public void deleteStream(String youtuber) {
+        Stream stream = streams.get(youtuber);
         streams.remove(youtuber.toLowerCase());
         plugin.fullRefreshMenu();
+        RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.DELETED);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
     }
     public Stream getStream(String youtuber) {
         return streams.get(youtuber.toLowerCase());
@@ -67,6 +76,8 @@ public class StreamsManager {
             if(stream.regetViewers() == -1 || stream.regetDuration() == -1L) {
                 deleted_streams++;
                 streams.remove(stream.getYouTuber().getName());
+                RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.END);
+                Bukkit.getServer().getPluginManager().callEvent(event);
             }
             else {
                 stream.setViewers(stream.regetViewers());
