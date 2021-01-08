@@ -1,4 +1,4 @@
-package com.melowetty.advancedstreams.APIs;
+package com.melowetty.advancedstreams.apis;
 
 public abstract class AbstractAPI {
     public String API_key;

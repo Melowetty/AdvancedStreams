@@ -1,11 +1,9 @@
-package com.melowetty.advancedstreams.Command;
+package com.melowetty.advancedstreams.commands;
 
 import com.melowetty.advancedstreams.*;
-import com.melowetty.advancedstreams.Managers.StreamsManager;
-import com.melowetty.advancedstreams.Utils.Helper;
-import com.melowetty.advancedstreams.Utils.ItemHelper;
-import com.melowetty.advancedstreams.Utils.URLHelper;
-import org.bukkit.Material;
+import com.melowetty.advancedstreams.managers.StreamsManager;
+import com.melowetty.advancedstreams.utils.Helper;
+import com.melowetty.advancedstreams.utils.URLHelper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

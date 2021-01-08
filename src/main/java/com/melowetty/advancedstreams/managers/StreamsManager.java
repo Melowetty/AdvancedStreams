@@ -1,20 +1,24 @@
-package com.melowetty.advancedstreams.Managers;
+package com.melowetty.advancedstreams.managers;
 
 import com.melowetty.advancedstreams.*;
-import com.melowetty.advancedstreams.Events.AddStreamEvent;
-import com.melowetty.advancedstreams.Events.RemoveStreamEvent;
-import com.melowetty.advancedstreams.Utils.URLHelper;
+import com.melowetty.advancedstreams.events.AddStreamEvent;
+import com.melowetty.advancedstreams.events.RemoveStreamEvent;
+import com.melowetty.advancedstreams.utils.Helper;
+import com.melowetty.advancedstreams.utils.URLHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class StreamsManager {
-    private AdvancedStreams plugin;
+    private final AdvancedStreams plugin;
     public StreamsManager() {
         plugin = AdvancedStreams.getInstance();
     }
     private final HashMap<String, Stream> streams = new HashMap<>();
+    private HashMap<Integer, Stream> sortedStreams = new HashMap<>();
     public HashMap<String, Stream> getStreams() {
         return streams;
     }
@@ -32,6 +36,7 @@ public class StreamsManager {
         plugin.fullRefreshMenu();
         AddStreamEvent event = new AddStreamEvent(stream);
         Bukkit.getServer().getPluginManager().callEvent(event);
+        sortedStreams = Helper.getSortedStreams();
         return ResponseStatus.SUCCESS;
     }
     public void deleteStream(String youtuber) {
@@ -40,6 +45,8 @@ public class StreamsManager {
         plugin.fullRefreshMenu();
         RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.DELETED);
         Bukkit.getServer().getPluginManager().callEvent(event);
+        if(streams.size() != 0)
+            sortedStreams = Helper.getSortedStreams();
 
     }
     public Stream getStream(String youtuber) {
@@ -71,10 +78,10 @@ public class StreamsManager {
         // to upgrade
     }
     public void refreshBroadcastsInfo() {
-        int deleted_streams = 0;
+        int deletedStreams = 0;
         for(Stream stream : getAllStreams()) {
             if(stream.regetViewers() == -1 || stream.regetDuration() == -1L) {
-                deleted_streams++;
+                deletedStreams++;
                 streams.remove(stream.getYouTuber().getName());
                 RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.END);
                 Bukkit.getServer().getPluginManager().callEvent(event);
@@ -84,9 +91,13 @@ public class StreamsManager {
                 stream.setDuration(stream.regetDuration());
             }
         }
-        if(deleted_streams > 0)
+        if(deletedStreams > 0)
             plugin.fullRefreshMenu();
         else if(!getAllStreams().isEmpty())
             plugin.refreshMenu();
+    }
+
+    public Stream getStreamWithSlot(int slot) {
+        return sortedStreams.get(slot);
     }
 }

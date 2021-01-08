@@ -1,21 +1,18 @@
 package com.melowetty.advancedstreams;
 
-import com.melowetty.advancedstreams.Command.StreamsCommand;
-import com.melowetty.advancedstreams.Events.ClickInventoryEvent;
-import com.melowetty.advancedstreams.Managers.SettingsManager;
-import com.melowetty.advancedstreams.Managers.StreamsManager;
-import com.melowetty.advancedstreams.Managers.TimersManager;
-import com.melowetty.advancedstreams.Utils.Helper;
-import com.melowetty.advancedstreams.Utils.InventoryHelper;
-import com.melowetty.advancedstreams.Utils.ItemHelper;
+import com.melowetty.advancedstreams.commands.StreamsCommand;
+import com.melowetty.advancedstreams.events.ClickInventoryEvent;
+import com.melowetty.advancedstreams.managers.SettingsManager;
+import com.melowetty.advancedstreams.managers.StreamsManager;
+import com.melowetty.advancedstreams.managers.TimersManager;
+import com.melowetty.advancedstreams.utils.Helper;
+import com.melowetty.advancedstreams.utils.InventoryHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public final class AdvancedStreams extends JavaPlugin {
-    private static AdvancedStreams instance;
+    private static AdvancedStreams INSTANCE;
     private static SettingsManager settingsManager;
     private static StreamsManager streamsManager;
     private static TimersManager timersManager;
@@ -23,19 +20,12 @@ public final class AdvancedStreams extends JavaPlugin {
     private Inventory menu;
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
         settingsManager = new SettingsManager();
         streamsManager = new StreamsManager();
         timersManager = new TimersManager();
 
         initMenu();
-
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                streamsManager.refreshBroadcastsInfo();
-//            }
-//        }.runTaskTimer(this, 0, settingsManager.getCooldownUpdateBroadcastInfo() * 20L);
 
         placeholderConnect = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
 
@@ -54,7 +44,7 @@ public final class AdvancedStreams extends JavaPlugin {
     }
 
     public static AdvancedStreams getInstance() {
-        return instance;
+        return INSTANCE;
     }
     public SettingsManager getSettingsManager() {
         return settingsManager;
@@ -82,7 +72,7 @@ public final class AdvancedStreams extends JavaPlugin {
         }
     }
     public void refreshMenu() {
-        InventoryHelper.fill(menu, settingsManager.getItemStreams());
+        InventoryHelper.fill(menu, Helper.getItemStreams());
     }
 
     public Inventory getMenu() {

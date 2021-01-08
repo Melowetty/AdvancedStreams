@@ -1,4 +1,4 @@
-package com.melowetty.advancedstreams.Managers;
+package com.melowetty.advancedstreams.managers;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
 import org.bukkit.Bukkit;

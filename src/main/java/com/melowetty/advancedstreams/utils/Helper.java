@@ -1,25 +1,32 @@
-package com.melowetty.advancedstreams.Utils;
+package com.melowetty.advancedstreams.utils;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
 import com.melowetty.advancedstreams.CustomColor;
 import com.melowetty.advancedstreams.Stream;
+import com.melowetty.advancedstreams.managers.SettingsManager;
+import com.melowetty.advancedstreams.managers.StreamsManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Helper {
     public static String formatDuration(Long duration) {
-        Long real_duration = Math.abs(System.currentTimeMillis() - duration);
+        Long realDuration = Math.abs(System.currentTimeMillis() - duration);
         SimpleDateFormat format = new SimpleDateFormat("HHч. mmмин.");
-        return format.format(real_duration);
+        return format.format(realDuration);
     }
     public static Long youtubeDataToLong(String date) {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -29,6 +36,95 @@ public class Helper {
             debug(e);
         }
         return null;
+    }
+    public static HashMap<Integer, ItemStack> getItemStreams() {
+        HashMap<Integer, ItemStack> out = new HashMap<>();
+        StreamsManager streamsManager = AdvancedStreams.getInstance().getStreamsManager();
+        SettingsManager settingsManager = AdvancedStreams.getInstance().getSettingsManager();
+        List<Stream> streams = streamsManager.getAllStreams();
+        streamsManager.sort(streams, settingsManager.getSortType());
+        for(int i = 0; i < streams.size(); i++) {
+            out.put(settingsManager.getBroadcastsPos().get(i), buildItemStream(streams.get(i)));
+        }
+        return out;
+    }
+    public static ItemStack buildItemStream(Stream stream) {
+        SettingsManager manager = AdvancedStreams.getInstance().getSettingsManager();
+        ItemHelper.Builder item = ItemHelper.builder(
+                manager.getStreamMaterial());
+        HashMap<String, String> placeholders = getPlaceholders(stream);
+        String title = colored(formatStringWithPlaceholder(
+                manager.getConfig().getString("format-item-broadcast.title"),
+                placeholders));
+        List <String> lore = formatListWithPlaceholder(
+                colored(manager.getConfig().getStringList("format-item-broadcast.lore")),
+                placeholders);
+        boolean enchanted = manager.getConfig().getBoolean("format-item-broadcast.enchantment");
+        int meta_id = manager.getConfig().getInt("format-item-broadcast.meta-id");
+        if(!title.isEmpty())
+            item.withName(title);
+        if(!lore.isEmpty())
+            item.withLore(lore);
+        if(enchanted) {
+            item.addEnchant(Enchantment.DIG_SPEED, 1);
+            item.addFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+        if(meta_id != 0)
+            item.withDamage(meta_id);
+        if(getColorFromString(manager.getConfig().getString("format-item-broadcast.color")) != CustomColor.NONE) {
+            item.withColor(getColorFromString(manager.getConfig().getString("format-item-broadcast.color")));
+        }
+        return item.build();
+    }
+    public static HashMap<Integer, Stream> getSortedStreams() {
+        HashMap<Integer, Stream> temp = new HashMap<>();
+        StreamsManager streamsManager = AdvancedStreams.getInstance().getStreamsManager();
+        SettingsManager settingsManager = AdvancedStreams.getInstance().getSettingsManager();
+        List<Stream> streams = streamsManager.getAllStreams();
+        streamsManager.sort(streams, settingsManager.getSortType());
+        for(int i = 0; i < streams.size(); i++) {
+            temp.put(settingsManager.getBroadcastsPos().get(i), streams.get(i));
+        }
+        return temp;
+    }
+    public static HashMap<Integer, ItemStack> cfgToHashMap(FileConfiguration cfg, String section) {
+        HashMap<Integer, ItemStack> items = new HashMap<>();
+        if(cfg.getConfigurationSection(section).getKeys(false) == null)
+            return null;
+        for(String key : cfg.getConfigurationSection(section).getKeys(false))
+        {
+            ItemHelper.Builder item = ItemHelper.builder(ItemHelper.parseMaterial(cfg.getString(section + "." + key + ".material")));
+            String title = Helper.colored(cfg.getString(section + "." + key + ".title"));
+            boolean enchanted = cfg.getBoolean(section + "." + key + ".enchantment");
+            List <String> lore = Helper.colored(cfg.getStringList(section + "." + key + ".lore"));
+            int meta_id = cfg.getInt(section + "." + key + ".meta-id");
+            if(!title.isEmpty())
+                item.withName(title);
+            if(!lore.isEmpty())
+                item.withLore(lore);
+            if(enchanted) {
+                item.addEnchant(Enchantment.DIG_SPEED, 1);
+                item.addFlags(ItemFlag.HIDE_ENCHANTS);
+            }
+            if(meta_id != 0)
+                item.withDamage(meta_id);
+            if(Helper.getColorFromString(cfg.getString(section + "." + key + ".color")) != CustomColor.NONE) {
+                item.withColor(Helper.getColorFromString(cfg.getString(section + "." + key + ".color")));
+            }
+            if(section.equalsIgnoreCase("filling-items"))
+                Helper.cloneAndUnionList(items, Helper.getPositionBroadcasts(cfg.getString(section + "." + key + ".slots")),item.build());
+            else
+                items.put(cfg.getInt(section + "." + key + ".slot")-1, item.build());
+        }
+        return items;
+    }
+    public static String getLink(Stream stream) {
+        switch (stream.getPlatform()) {
+            case YOUTUBE:
+                return "https://youtu.be/" + stream.getID();
+            default:
+                return null;
+        }
     }
     public static String colored(String str) {
         return ChatColor.translateAlternateColorCodes('&',str);
@@ -68,7 +164,7 @@ public class Helper {
             return false;
         }
     }
-    public static TextComponent generateTextComponentWithURL(String context, String hover, String url) {
+    public static TextComponent generateTextComponent(String context, String hover, String url) {
         TextComponent tc = new TextComponent();
         tc.setText(colored(context));
         if (hover != null && !hover.equals(""))

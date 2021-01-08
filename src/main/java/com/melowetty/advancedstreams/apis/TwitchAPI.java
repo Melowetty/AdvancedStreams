@@ -1,10 +1,10 @@
-package com.melowetty.advancedstreams.APIs;
+package com.melowetty.advancedstreams.apis;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
 
-public class VKAPI extends AbstractAPI {
-    public VKAPI(String id) {
-        this.API_key = AdvancedStreams.getInstance().getSettingsManager().getVKKey();
+public class TwitchAPI extends AbstractAPI {
+    public TwitchAPI(String id) {
+        this.API_key = AdvancedStreams.getInstance().getSettingsManager().getTwitchKey();
         this.id = id;
     }
     @Override

@@ -1,25 +1,19 @@
-package com.melowetty.advancedstreams.Events;
+package com.melowetty.advancedstreams.events;
 
-import com.melowetty.advancedstreams.RemoveReason;
 import com.melowetty.advancedstreams.Stream;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class RemoveStreamEvent extends Event {
+public class AddStreamEvent extends Event {
     Stream stream;
-    RemoveReason reason;
-    public RemoveStreamEvent(Stream stream, RemoveReason reason) {
+
+    public AddStreamEvent(Stream stream) {
         this.stream = stream;
-        this.reason = reason;
     }
     private static final HandlerList handlers = new HandlerList();
 
     public Stream getStream() {
         return stream;
-    }
-
-    public RemoveReason getReason() {
-        return reason;
     }
 
     public HandlerList getHandlers() {

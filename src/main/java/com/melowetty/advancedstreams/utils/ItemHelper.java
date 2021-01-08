@@ -1,10 +1,8 @@
-package com.melowetty.advancedstreams.Utils;
+package com.melowetty.advancedstreams.utils;
 
 import com.melowetty.advancedstreams.CustomColor;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;

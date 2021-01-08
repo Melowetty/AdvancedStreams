@@ -1,6 +1,7 @@
-package com.melowetty.advancedstreams.Events;
+package com.melowetty.advancedstreams.events;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
+import com.melowetty.advancedstreams.utils.Helper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,10 @@ public class ClickInventoryEvent implements Listener {
         AdvancedStreams plugin = AdvancedStreams.getInstance();
         if (e.getClickedInventory().getName().equalsIgnoreCase(plugin.getNameMenu())) {
             Player clicked = (Player)e.getWhoClicked();
+            if(e.getCurrentItem().getType() == plugin.getSettingsManager().getStreamMaterial()) {
+                String link = Helper.getLink(plugin.getStreamsManager().getStreamWithSlot(e.getSlot()));
+                Helper.generateTextComponent("Ссылка на стрим", "Перейдите по ссылке", link);
+            }
             e.setCancelled(true);
         }
     }

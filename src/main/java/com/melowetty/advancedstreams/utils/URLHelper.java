@@ -1,8 +1,7 @@
-package com.melowetty.advancedstreams.Utils;
+package com.melowetty.advancedstreams.utils;
 
-import com.melowetty.advancedstreams.APIs.YouTubeAPI;
-import com.melowetty.advancedstreams.AdvancedStreams;
 import com.melowetty.advancedstreams.StreamPlatform;
+import com.melowetty.advancedstreams.apis.YouTubeAPI;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

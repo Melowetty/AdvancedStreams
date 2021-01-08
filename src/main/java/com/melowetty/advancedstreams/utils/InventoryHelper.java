@@ -1,7 +1,5 @@
-package com.melowetty.advancedstreams.Utils;
+package com.melowetty.advancedstreams.utils;
 
-import com.melowetty.advancedstreams.AdvancedStreams;
-import com.melowetty.advancedstreams.CustomColor;
 import com.melowetty.advancedstreams.ResponseStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,7 +7,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class InventoryHelper {
     public static void fill(Inventory inventory, Material material, boolean reverse, int[] temp) {

@@ -1,8 +1,8 @@
-package com.melowetty.advancedstreams.APIs;
+package com.melowetty.advancedstreams.apis;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
-import com.melowetty.advancedstreams.Utils.Helper;
-import com.melowetty.advancedstreams.Utils.URLHelper;
+import com.melowetty.advancedstreams.utils.Helper;
+import com.melowetty.advancedstreams.utils.URLHelper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -35,8 +35,8 @@ public class YouTubeAPI extends AbstractAPI {
             JSONArray items = (JSONArray)json.get("items");
             JSONObject j1 = (JSONObject)items.get(0);
             JSONObject jstats = (JSONObject)j1.get("liveStreamingDetails");
-            String start_time = (String)jstats.get("actualStartTime");
-            return Helper.youtubeDataToLong(start_time.replace('T',' ').replace('Z', ' '));
+            String startTime = (String)jstats.get("actualStartTime");
+            return Helper.youtubeDataToLong(startTime.replace('T',' ').replace('Z', ' '));
         } catch (Exception e) {
             Helper.debug(e);
             return null;

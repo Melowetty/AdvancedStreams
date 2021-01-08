@@ -1,7 +1,7 @@
 package com.melowetty.advancedstreams;
 
-import com.melowetty.advancedstreams.APIs.YouTubeAPI;
-import com.melowetty.advancedstreams.Utils.Helper;
+import com.melowetty.advancedstreams.apis.YouTubeAPI;
+import com.melowetty.advancedstreams.utils.Helper;
 import org.bukkit.entity.Player;
 
 public class Stream {
