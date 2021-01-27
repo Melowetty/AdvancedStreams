@@ -29,7 +29,6 @@ public class ItemHelper {
                 return Material.getMaterial(material.toUpperCase());
             }
         } catch (Exception ex) {
-            Helper.debug(ex);
         }
 
         return null;

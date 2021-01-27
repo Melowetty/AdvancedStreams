@@ -1,10 +1,10 @@
 package com.melowetty.advancedstreams.managers;
 
 import com.melowetty.advancedstreams.*;
+import com.melowetty.advancedstreams.apis.APITransponder;
 import com.melowetty.advancedstreams.events.AddStreamEvent;
 import com.melowetty.advancedstreams.events.RemoveStreamEvent;
 import com.melowetty.advancedstreams.utils.Helper;
-import com.melowetty.advancedstreams.utils.URLHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -19,19 +19,51 @@ public class StreamsManager {
     }
     private final HashMap<String, Stream> streams = new HashMap<>();
     private HashMap<Integer, Stream> sortedStreams = new HashMap<>();
+
     public HashMap<String, Stream> getStreams() {
         return streams;
     }
+
     public List<Stream> getAllStreams() {
         return new ArrayList<>(streams.values());
     }
-    public ResponseStatus addStream(final Player youtuber, final String link, final StreamPlatform streamPlatform) {
+
+    public List<String> getListStreams() {
+        List<String> out = new ArrayList<>();
+        for(Stream stream : getAllStreams()) {
+            out.add(stream.toString());
+        }
+        return out;
+    }
+
+    public ResponseStatus addStream(final Player youtuber, final String id, final StreamPlatform streamPlatform) {
         if(AdvancedStreams.getInstance().getSettingsManager().getMaxStreamsCount() == streams.size())
             return ResponseStatus.OVERFLOW;
-        String title = URLHelper.getTitle(streamPlatform, link);
+
+        String title = new APITransponder(streamPlatform, id).getTitle();
+
         if(title == null)
             return ResponseStatus.ERROR;
-        Stream stream = new Stream(youtuber, link, title, streamPlatform);
+
+        Stream stream = new Stream(youtuber, id, title, streamPlatform);
+        streams.put(youtuber.getName().toLowerCase(),stream);
+        plugin.fullRefreshMenu();
+        AddStreamEvent event = new AddStreamEvent(stream);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+        sortedStreams = Helper.getSortedStreams();
+        return ResponseStatus.SUCCESS;
+    }
+
+    public ResponseStatus addStream(final Player youtuber, final String ownerId, final String id, final StreamPlatform streamPlatform) {
+        if(AdvancedStreams.getInstance().getSettingsManager().getMaxStreamsCount() == streams.size())
+            return ResponseStatus.OVERFLOW;
+
+        String title = new APITransponder(streamPlatform, ownerId, id).getTitle();
+
+        if(title == null)
+            return ResponseStatus.ERROR;
+
+        Stream stream = new Stream(youtuber, ownerId, id, title, streamPlatform);
         streams.put(youtuber.getName().toLowerCase(),stream);
         plugin.fullRefreshMenu();
         AddStreamEvent event = new AddStreamEvent(stream);
@@ -52,6 +84,7 @@ public class StreamsManager {
     public Stream getStream(String youtuber) {
         return streams.get(youtuber.toLowerCase());
     }
+
     private void sortStreamsByViewers(List<Stream> streams) {
         streams.sort((stream1, stream2) -> {
             Integer o1 = stream1.getViewers();
@@ -80,15 +113,16 @@ public class StreamsManager {
     public void refreshBroadcastsInfo() {
         int deletedStreams = 0;
         for(Stream stream : getAllStreams()) {
-            if(stream.regetViewers() == -1 || stream.regetDuration() == -1L) {
+            APITransponder API = new APITransponder(stream);
+            if(API.getViewers() == 0 || API.getDuration() != null) {
                 deletedStreams++;
                 streams.remove(stream.getYouTuber().getName());
                 RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.END);
                 Bukkit.getServer().getPluginManager().callEvent(event);
             }
             else {
-                stream.setViewers(stream.regetViewers());
-                stream.setDuration(stream.regetDuration());
+                stream.setViewers(API.getViewers());
+                stream.setDuration(API.getDuration());
             }
         }
         if(deletedStreams > 0)

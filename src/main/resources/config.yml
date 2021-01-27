@@ -2,7 +2,7 @@ debug-mode: TRUE
 cooldown-alerts-active-streams: 600
 cooldown-update-broadcast-info: 10
 api-keys:
-  vk:
+  vk: '8e5455183a96b039e19c2f210733e2e1d74fca873516a52e4721ecf67aa9c920f58103dc8286a6567cde3'
   twitch:
   youtube: 'AIzaSyC7yTvMUNk1Qm2wKmNGrszNIti-m6qRCsA'
 settings-menu:

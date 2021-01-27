@@ -2,12 +2,14 @@ package com.melowetty.advancedstreams.commands;
 
 import com.melowetty.advancedstreams.*;
 import com.melowetty.advancedstreams.managers.StreamsManager;
+import com.melowetty.advancedstreams.utils.ChatHelper;
 import com.melowetty.advancedstreams.utils.Helper;
-import com.melowetty.advancedstreams.utils.URLHelper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Locale;
 
 public class StreamsCommand implements CommandExecutor {
 
@@ -21,7 +23,7 @@ public class StreamsCommand implements CommandExecutor {
             if(args.length > 0) {
                 StreamsManager streamsManager = AdvancedStreams.getInstance().getStreamsManager();
                 if(args[0].equalsIgnoreCase("youtube")) {
-                    ResponseStatus status = streamsManager.addStream(player, URLHelper.getYouTubeVideoID(args[1]), StreamPlatform.YOUTUBE);
+                    ResponseStatus status = streamsManager.addStream(player, Helper.getYouTubeVideoID(args[1]), StreamPlatform.YOUTUBE);
                     switch(status) {
                         case SUCCESS:
                             player.sendMessage(Helper.colored("&6Вы успешно добавили &c&lстрим &6в табло."));
@@ -33,7 +35,24 @@ public class StreamsCommand implements CommandExecutor {
                             player.sendMessage(Helper.colored("&cВ табло максимальное количество прямых трансляций"));
                             break;
                         default:
-                            player.sendMessage("&6[SCY] &4Произошла неопределнная ошибка.");
+                            player.sendMessage(Helper.colored("&6[SCY] &4Произошла неопределнная ошибка."));
+                    }
+                }
+                if(args[0].equalsIgnoreCase("vk")) {
+                    String[] ids = Helper.getVKIds(args[1]);
+                    ResponseStatus status = streamsManager.addStream(player, ids[0], ids[1], StreamPlatform.VK);
+                    switch(status) {
+                        case SUCCESS:
+                            player.sendMessage(Helper.colored("&6Вы успешно добавили &c&lстрим &6в табло."));
+                            break;
+                        case NULL:
+                            player.sendMessage(Helper.colored("&6[SCY] &Видео не найдено."));
+                            break;
+                        case OVERFLOW:
+                            player.sendMessage(Helper.colored("&cВ табло максимальное количество прямых трансляций"));
+                            break;
+                        default:
+                            ChatHelper.sendMessage(player, "&6[SCY] &4Произошла неопределнная ошибка.");
                     }
                 }
                 if(args[0].equalsIgnoreCase("delete")) {
@@ -41,6 +60,13 @@ public class StreamsCommand implements CommandExecutor {
                 }
                 if(args[0].equalsIgnoreCase("list")) {
                     player.openInventory(AdvancedStreams.getInstance().getMenu());
+                }
+                if(args[0].equalsIgnoreCase("admin")) {
+                    switch(args[1].toLowerCase()) {
+                        case "all":
+                            ChatHelper.sendMessage(player, streamsManager.getListStreams());
+                            break;
+                    }
                 }
             }
         }

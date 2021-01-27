@@ -1,23 +1,37 @@
 package com.melowetty.advancedstreams;
 
-import com.melowetty.advancedstreams.apis.YouTubeAPI;
+import com.melowetty.advancedstreams.apis.APITransponder;
 import com.melowetty.advancedstreams.utils.Helper;
 import org.bukkit.entity.Player;
 
+import java.text.ParseException;
+
 public class Stream {
+    private String ownerId;
     private final String title;
-    private final Player youtuber;
     private final String id;
-    private final StreamPlatform platform;
     private Long duration;
     private int viewers;
+    private final Player youtuber;
+    private final StreamPlatform platform;
     public Stream(final Player youtuber, final String id, final String title, final StreamPlatform platform) {
         this.youtuber = youtuber;
         this.id = id;
         this.platform = platform;
         this.title = title;
-        regetDuration();
-        regetViewers();
+        APITransponder API = new APITransponder(this);
+        duration = API.getDuration();
+        viewers = API.getViewers();
+    }
+    public Stream(final Player youtuber, final String  ownerId, final String id, final String title, final StreamPlatform platform) {
+        this.youtuber = youtuber;
+        this.id = id;
+        this.platform = platform;
+        this.title = title;
+        this.ownerId = ownerId;
+        APITransponder API = new APITransponder(this);
+        duration = API.getDuration();
+        viewers = API.getViewers();
     }
     public StreamPlatform getPlatform() {
         return platform;
@@ -32,30 +46,6 @@ public class Stream {
 
     public String getTitle() { return title; }
 
-    public int regetViewers() {
-        switch (platform) {
-            case YOUTUBE:
-                YouTubeAPI youTubeAPI = new YouTubeAPI(id);
-                if(youTubeAPI.getViewers() != 0) {
-                    return youTubeAPI.getViewers();
-                }
-                return -1;
-            default:
-                return -1;
-        }
-    }
-    public Long regetDuration() {
-        switch (platform) {
-            case YOUTUBE:
-                YouTubeAPI youTubeAPI = new YouTubeAPI(id);
-                if(youTubeAPI.getDuration() != null) {
-                    return youTubeAPI.getDuration();
-                }
-                return -1L;
-            default:
-                return null;
-        }
-    }
     public String getFormatedDuration() {
         return Helper.formatDuration(duration);
     }
@@ -76,11 +66,15 @@ public class Stream {
         this.duration = duration;
     }
 
+    public String getOwnerID() {
+        return ownerId;
+    }
+
     @Override
     public String toString() {
         return "Stream{" +
                 "title='" + title + '\'' +
-                ", youtuber='" + youtuber + '\'' +
+                ", youtuber='" + youtuber.getDisplayName() + '\'' +
                 ", id='" + id + '\'' +
                 ", platform=" + platform.toString()+
                 ", duration=" + duration +

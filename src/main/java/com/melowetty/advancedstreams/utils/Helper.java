@@ -5,33 +5,32 @@ import com.melowetty.advancedstreams.CustomColor;
 import com.melowetty.advancedstreams.Stream;
 import com.melowetty.advancedstreams.managers.SettingsManager;
 import com.melowetty.advancedstreams.managers.StreamsManager;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Helper {
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     public static String formatDuration(Long duration) {
-        Long realDuration = Math.abs(System.currentTimeMillis() - duration);
         SimpleDateFormat format = new SimpleDateFormat("HHч. mmмин.");
-        return format.format(realDuration);
+        String out = format.format(
+                duration
+                - new Date().getTime());
+
+        return out;
     }
-    public static Long youtubeDataToLong(String date) {
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static Long youtubeDataToLong(String nonFormatDuration) {
         try {
-            return f.parse(date).getTime();
+            return format.parse(nonFormatDuration).getTime();
         } catch (ParseException e) {
             debug(e);
         }
@@ -127,7 +126,7 @@ public class Helper {
         }
     }
     public static String colored(String str) {
-        return ChatColor.translateAlternateColorCodes('&',str);
+        return ChatColor.translateAlternateColorCodes('&', str);
     }
     public static List<String> colored(List<String> list) {
         List<String> out = new ArrayList<>();
@@ -160,21 +159,8 @@ public class Helper {
             Integer.parseInt(numberString);
             return true;
         } catch (Exception ex) {
-            Helper.debug(ex);
             return false;
         }
-    }
-    public static TextComponent generateTextComponent(String context, String hover, String url) {
-        TextComponent tc = new TextComponent();
-        tc.setText(colored(context));
-        if (hover != null && !hover.equals(""))
-            tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(colored(hover))).create()));
-        if (url != null && !url.equals(""))
-            tc.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url));
-        return tc;
-    }
-    public static void sendTextComponent(Player player, TextComponent textComponent) {
-        player.spigot().sendMessage(textComponent);
     }
     public static void cloneAndUnionList(HashMap<Integer, ItemStack> map, List<Integer> repeats, ItemStack obj) {
         for(int repeat : repeats) {
@@ -227,12 +213,16 @@ public class Helper {
         if(AdvancedStreams.getInstance().getSettingsManager().isDebug())
             e.printStackTrace();
     }
+    public static void debug(String str) {
+        if(AdvancedStreams.getInstance().getSettingsManager() == null) return;
+        if(AdvancedStreams.getInstance().getSettingsManager().isDebug())
+            AdvancedStreams.getInstance().getLogger().warning(str);
+    }
     public static CustomColor getColorFromString(String color) {
         try {
             return CustomColor.valueOf(color);
         }
         catch (Exception e) {
-            debug(e);
             return CustomColor.NONE;
         }
     }
@@ -244,5 +234,46 @@ public class Helper {
         out.put("%viewers%", String.valueOf(stream.getViewers()));
         out.put("%title%", stream.getTitle());
         return out;
+    }
+    public static ArrayList<String> getContent(String surl) {
+        ArrayList<String> content = new ArrayList<>();
+        try {
+            URL url = new URL(surl);
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+            String Line;
+            while ((Line = in.readLine()) != null)
+                content.add(Line);
+            in.close();
+            return content;
+        } catch (Exception e) {
+            Helper.debug(e);
+            return content;
+        }
+    }
+    public static String arrayListToString(ArrayList<String> list) {
+        StringBuilder content = new StringBuilder();
+        for (String s : list)
+            content.append(s);
+        return content.toString();
+    }
+    public static String getYouTubeVideoID(String url) {
+        if(!url.contains("youtu")) return null;
+        if(url.contains("youtu.be")) {
+            return url.substring(url.lastIndexOf('/')+1);
+        }
+        else {
+            return url.substring(url.lastIndexOf("?v")+3);
+        }
+    }
+    public static String[] getVKIds(String url) {
+        if(!url.contains("vk.com")) return null;
+        if(url.contains("%2F")) {
+            url = url.substring(url.lastIndexOf("video")+5, url.indexOf("%2F"));
+            return url.split("_");
+        }
+        else {
+            url = url.substring(url.lastIndexOf("video")+5);
+            return url.split("_");
+        }
     }
 }
