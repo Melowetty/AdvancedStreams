@@ -34,7 +34,7 @@ public class YouTubeAPI extends AbstractAPI {
             JSONObject j1 = (JSONObject)items.get(0);
             JSONObject jstats = (JSONObject)j1.get("liveStreamingDetails");
             String startTime = (String)jstats.get("actualStartTime");
-            return Helper.youtubeDataToLong(startTime.replace('T',' ').replace('Z', ' '));
+            return Helper.youtubeDataToLong(startTime);
         } catch (Exception e) {
             return null;
         }

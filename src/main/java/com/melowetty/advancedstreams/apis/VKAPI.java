@@ -22,7 +22,7 @@ public class VKAPI extends AbstractAPI {
             JSONObject response = (JSONObject) json.get("response");
             JSONArray items = (JSONArray)response.get("items");
             JSONObject jTemp = (JSONObject) items.get(0);
-            return Integer.parseInt(String.valueOf(jTemp.get("spectators")));
+            return Integer.parseInt( String.valueOf( jTemp.get("spectators") ) );
         } catch (Exception e) {
             Helper.debug(e);
             return 0;
@@ -37,7 +37,7 @@ public class VKAPI extends AbstractAPI {
             JSONObject response = (JSONObject) json.get("response");
             JSONArray items = (JSONArray)response.get("items");
             JSONObject jTemp = (JSONObject) items.get(0);
-            return ((Long) jTemp.get("date"));
+            return Long.parseLong( String.valueOf( jTemp.get("date") ) );
         } catch (Exception e) {
             Helper.debug(e);
             return null;

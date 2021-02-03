@@ -22,11 +22,10 @@ public class Helper {
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     public static String formatDuration(Long duration) {
         SimpleDateFormat format = new SimpleDateFormat("HHч. mmмин.");
-        String out = format.format(
+
+        return format.format(
                 duration
                 - new Date().getTime());
-
-        return out;
     }
     public static Long youtubeDataToLong(String nonFormatDuration) {
         try {
