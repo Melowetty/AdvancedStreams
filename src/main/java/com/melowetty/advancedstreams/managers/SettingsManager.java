@@ -1,14 +1,11 @@
 package com.melowetty.advancedstreams.managers;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
-import com.melowetty.advancedstreams.CustomColor;
 import com.melowetty.advancedstreams.SortType;
 import com.melowetty.advancedstreams.utils.Helper;
 import com.melowetty.advancedstreams.utils.ItemHelper;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;

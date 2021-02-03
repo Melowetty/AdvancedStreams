@@ -1,6 +1,8 @@
 package com.melowetty.advancedstreams.commands;
 
-import com.melowetty.advancedstreams.*;
+import com.melowetty.advancedstreams.AdvancedStreams;
+import com.melowetty.advancedstreams.ResponseStatus;
+import com.melowetty.advancedstreams.StreamPlatform;
 import com.melowetty.advancedstreams.managers.StreamsManager;
 import com.melowetty.advancedstreams.utils.ChatHelper;
 import com.melowetty.advancedstreams.utils.Helper;
@@ -8,8 +10,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.Locale;
 
 public class StreamsCommand implements CommandExecutor {
 
