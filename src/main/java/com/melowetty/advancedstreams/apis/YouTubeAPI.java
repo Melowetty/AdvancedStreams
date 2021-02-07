@@ -15,11 +15,11 @@ public class YouTubeAPI extends AbstractAPI {
     public int getViewers() {
         try {
             String url = "https://youtube.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=" + id + "&key=" + ApiKey;
-            JSONObject json = (JSONObject) JSONValue.parse(Helper.arrayListToString(Helper.getContent(url)));
+            JSONObject json = Helper.parseURL(url);
             JSONArray items = (JSONArray)json.get("items");
             JSONObject j1 = (JSONObject)items.get(0);
-            JSONObject jstats = (JSONObject)j1.get("liveStreamingDetails");
-            return Integer.parseInt((String) jstats.get("concurrentViewers"));
+            JSONObject jStats = (JSONObject)j1.get("liveStreamingDetails");
+            return Helper.objectToInt( jStats.get("concurrentViewers") );
         } catch (Exception e) {
             return 0;
         }
@@ -29,12 +29,12 @@ public class YouTubeAPI extends AbstractAPI {
     public Long getDuration() {
         try {
             String url = "https://youtube.googleapis.com/youtube/v3/videos?part=liveStreamingDetails&id=" + id + "&key=" + ApiKey;
-            JSONObject json = (JSONObject) JSONValue.parse(Helper.arrayListToString(Helper.getContent(url)));
+            JSONObject json = Helper.parseURL(url);
             JSONArray items = (JSONArray)json.get("items");
             JSONObject j1 = (JSONObject)items.get(0);
-            JSONObject jstats = (JSONObject)j1.get("liveStreamingDetails");
-            String startTime = (String)jstats.get("actualStartTime");
-            return Helper.youtubeDataToLong(startTime);
+            JSONObject jStats = (JSONObject)j1.get("liveStreamingDetails");
+            String startTime = (String) jStats.get("actualStartTime");
+            return Helper.stringDataToLong(startTime);
         } catch (Exception e) {
             return null;
         }
@@ -44,11 +44,11 @@ public class YouTubeAPI extends AbstractAPI {
     public String getTitle() {
         try {
             String url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + id + "&key=" + ApiKey;
-            JSONObject json = (JSONObject)JSONValue.parse(Helper.arrayListToString(Helper.getContent(url)));
+            JSONObject json = Helper.parseURL(url);
             JSONArray items = (JSONArray)json.get("items");
             JSONObject j1 = (JSONObject)items.get(0);
-            JSONObject jstats = (JSONObject)j1.get("snippet");
-            return jstats.get("title").toString();
+            JSONObject jStats = (JSONObject)j1.get("snippet");
+            return Helper.objectToString( jStats.get("title") );
         } catch (Exception e) {
             return null;
         }

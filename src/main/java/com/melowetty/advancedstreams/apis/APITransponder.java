@@ -68,19 +68,19 @@ public class APITransponder {
                 if(youTubeAPI.getDuration() != null) {
                     return youTubeAPI.getDuration();
                 }
-                return -1L;
+                return null;
             case TWITCH:
                 TwitchAPI twitchAPI = new TwitchAPI(streamId);
                 if(twitchAPI.getViewers() != 0) {
                     return twitchAPI.getDuration();
                 }
-                return -1L;
+                return null;
             case VK:
                 VKAPI vkAPI = new VKAPI(ownerId, streamId);
                 if(vkAPI.getViewers() != 0) {
                     return vkAPI.getDuration();
                 }
-                return -1L;
+                return null;
         }
         return null;
     }

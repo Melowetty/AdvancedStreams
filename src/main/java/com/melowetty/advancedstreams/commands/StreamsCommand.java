@@ -55,6 +55,22 @@ public class StreamsCommand implements CommandExecutor {
                             ChatHelper.sendMessage(player, "&6[SCY] &4Произошла неопределнная ошибка.");
                     }
                 }
+                if(args[0].equalsIgnoreCase("twitch")) {
+                    ResponseStatus status = streamsManager.addStream(player, args[1], StreamPlatform.TWITCH);
+                    switch(status) {
+                        case SUCCESS:
+                            player.sendMessage(Helper.colored("&6Вы успешно добавили &c&lстрим &6в табло."));
+                            break;
+                        case NULL:
+                            player.sendMessage(Helper.colored("&6[SCY] &Видео не найдено."));
+                            break;
+                        case OVERFLOW:
+                            player.sendMessage(Helper.colored("&cВ табло максимальное количество прямых трансляций"));
+                            break;
+                        default:
+                            player.sendMessage(Helper.colored("&6[SCY] &4Произошла неопределнная ошибка."));
+                    }
+                }
                 if(args[0].equalsIgnoreCase("delete")) {
                     streamsManager.deleteStream(args[1]);
                 }

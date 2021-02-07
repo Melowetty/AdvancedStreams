@@ -22,7 +22,8 @@ public final class SettingsManager {
 
     private SortType sortType;
 
-    private String twitchKey;
+    private String twitchAccessToken;
+    private String twitchClientId;
     private String youtubeKey;
     private String vkKey;
     private String youtubeName;
@@ -65,7 +66,8 @@ public final class SettingsManager {
         cooldownAlerts = getConfig().getLong("cooldown-alerts-active-streams");
         cooldownUpdateBroadcastInfo = getConfig().getLong("cooldown-update-broadcast-info");
 
-        twitchKey = getConfig().getString("api-keys.twitch");
+        twitchAccessToken = getConfig().getString("api-keys.twitch.access-token");
+        twitchClientId = getConfig().getString("api-keys.twitch.client-id");
         youtubeKey = getConfig().getString("api-keys.youtube");
         vkKey = getConfig().getString("api-keys.vk");
 
@@ -102,8 +104,12 @@ public final class SettingsManager {
         return youtubeKey;
     }
 
-    public String getTwitchKey() {
-        return twitchKey;
+    public String getTwitchAccessToken() {
+        return twitchAccessToken;
+    }
+
+    public String getTwitchClientID() {
+        return twitchClientId;
     }
 
     public String getVKKey() {

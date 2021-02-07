@@ -10,9 +10,12 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,16 +30,31 @@ public class Helper {
         SimpleDateFormat format = new SimpleDateFormat("HHч. mmмин.");
 
         return format.format(
-                duration
-                - new Date().getTime());
+                new Date().getTime()
+                - duration);
     }
-    public static Long youtubeDataToLong(String nonFormatDuration) {
+    public static Long stringDataToLong(String nonFormatDuration) {
         try {
             return format.parse(nonFormatDuration).getTime();
         } catch (ParseException e) {
             debug(e);
         }
         return null;
+    }
+    public static String objectToString(Object object) {
+        return String.valueOf(object);
+    }
+    public static int objectToInt(Object object) {
+        return Integer.parseInt( String.valueOf(object) );
+    }
+    public static Long objectToLong(Object object) {
+        return Long.parseLong( String.valueOf(object) );
+    }
+    public static JSONObject parseURL(String URL) {
+        return (JSONObject) JSONValue.parse(arrayListToString(getContent(URL)));
+    }
+    public static JSONObject parseURL(String URL, String accessToken, String clientId) {
+        return (JSONObject) JSONValue.parse(arrayListToString(getContent(URL, accessToken, clientId)));
     }
     public static HashMap<Integer, ItemStack> getItemStreams() {
         HashMap<Integer, ItemStack> out = new HashMap<>();
@@ -237,10 +255,10 @@ public class Helper {
         out.put("%title%", stream.getTitle());
         return out;
     }
-    public static ArrayList<String> getContent(String surl) {
+    public static ArrayList<String> getContent(String curl) {
         ArrayList<String> content = new ArrayList<>();
         try {
-            URL url = new URL(surl);
+            URL url = new URL(curl);
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
             String Line;
             while ((Line = in.readLine()) != null)
@@ -251,6 +269,25 @@ public class Helper {
             Helper.debug(e);
             return content;
         }
+    }
+    public static ArrayList<String> getContent(String curl, String accessToken, String clientId) {
+        ArrayList<String> content = new ArrayList<>();
+        try {
+            URL url = new URL(curl);
+            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+            http.setRequestProperty("Authorization", "Bearer " + accessToken);
+            http.setRequestProperty("Client-Id", clientId);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(http.getInputStream()));
+            String Line;
+            while ((Line = in.readLine()) != null)
+                content.add(Line);
+            http.disconnect();
+        }
+        catch (Exception e) {
+            Helper.debug(e);
+        }
+        return content;
     }
     public static String arrayListToString(ArrayList<String> list) {
         StringBuilder content = new StringBuilder();

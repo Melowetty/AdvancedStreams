@@ -114,7 +114,7 @@ public class StreamsManager {
         int deletedStreams = 0;
         for(Stream stream : getAllStreams()) {
             APITransponder API = new APITransponder(stream);
-            if(API.getViewers() == 0 || API.getDuration() != null) {
+            if(API.getViewers() == 0 || API.getDuration() == null) {
                 deletedStreams++;
                 streams.remove(stream.getYouTuber().getName());
                 RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.END);
