@@ -8,8 +8,11 @@ import com.melowetty.advancedstreams.managers.TimersManager;
 import com.melowetty.advancedstreams.utils.Helper;
 import com.melowetty.advancedstreams.utils.InventoryHelper;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
 
 public final class AdvancedStreams extends JavaPlugin {
     private static AdvancedStreams INSTANCE;
@@ -80,7 +83,12 @@ public final class AdvancedStreams extends JavaPlugin {
     }
 
     public void fullRefreshMenu() {
+        List<HumanEntity> viewers = menu.getViewers();
         initMenu();
         refreshMenu();
+        for(HumanEntity player : viewers) {
+            player.closeInventory();
+            player.openInventory(menu);
+        }
     }
 }

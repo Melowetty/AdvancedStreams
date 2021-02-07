@@ -18,14 +18,16 @@ format-item-broadcast:
   material: EMERALD
   meta-id:
   lore:
-    - '&rСтример: &c%streamer%'
-    - '&rПлатформа: &c%platform%'
-    - '&rЗрителей: &c%viewers%'
-    - '&rПродолжительность: &c%duration%'
-    - '&6Нажмите, чтобы получить&c ссылку'
+    - ' '
+    - '&l&e● &fСтример: &e%streamer%'
+    - '&l&e● &fЗрителей: &e%viewers%'
+    - '&l&e● &fПлатформа: &c%platform%'
+    - '&l&e● &fПродолжительность: &c%duration%'
+    - ' '
+    - '&l&6▸ &fНажмите, чтобы получить ссылку'
 platform-name:
-  youtube: '&cYou&rTube'
-  twitch: '&eTwitch'
+  youtube: '&cYou&fTube'
+  twitch: '&dTwitch'
   vk: '&3ВКонтакте'
 helper-items:
   'ItemOne':

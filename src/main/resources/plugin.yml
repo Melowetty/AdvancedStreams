@@ -5,3 +5,4 @@ authors: [ Melowetty ]
 softdepend: [ PlaceholderAPI ]
 commands:
   stream:
+    aliases: [ streams ]

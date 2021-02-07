@@ -8,6 +8,7 @@ import com.melowetty.advancedstreams.managers.StreamsManager;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
@@ -106,6 +107,14 @@ public class Helper {
         }
         return temp;
     }
+    public static void sendAvailableComamnd(Player player) {
+        ChatHelper.sendMessage(player, "&aAdvancedStreams &8| &fДоступные команды: ");
+        ChatHelper.sendMessage(player, "&a▸ &fДобавление &cYouTube &fстрима - &a/stream YouTube [ссылка]");
+        ChatHelper.sendMessage(player, "&a▸ &fДобавление &3VK &fстрима - &a/stream VK [ссылка]");
+        ChatHelper.sendMessage(player, "&a▸ &fДобавление &dTwitch &fстрима - &a/stream Twitch [ссылка]");
+        ChatHelper.sendMessage(player, "&a▸ &fСписок стримов - &a/streams");
+        ChatHelper.sendMessage(player, "&a▸ &fУдаление стрима - &a/stream delete [Стример]");
+    }
     public static HashMap<Integer, ItemStack> cfgToHashMap(FileConfiguration cfg, String section) {
         HashMap<Integer, ItemStack> items = new HashMap<>();
         if(cfg.getConfigurationSection(section).getKeys(false) == null)
@@ -141,6 +150,10 @@ public class Helper {
         switch (stream.getPlatform()) {
             case YOUTUBE:
                 return "https://youtu.be/" + stream.getID();
+            case VK:
+                return "https://vk.com/video" + stream.getOwnerID() + "_" + stream.getID();
+            case TWITCH:
+                return "https://twitch.tv/" + stream.getID();
             default:
                 return null;
         }

@@ -26,7 +26,7 @@ public class StreamsCommand implements CommandExecutor {
                     ResponseStatus status = streamsManager.addStream(player, Helper.getYouTubeVideoID(args[1]), StreamPlatform.YOUTUBE);
                     switch(status) {
                         case SUCCESS:
-                            player.sendMessage(Helper.colored("&6Вы успешно добавили &c&lстрим &6в табло."));
+                            ChatHelper.sendMessage(player, "&aAdvancedStreams &8| &f Стрим был успешно добавлен!");
                             break;
                         case NULL:
                             player.sendMessage(Helper.colored("&6[SCY] &Видео не найдено."));
@@ -43,7 +43,7 @@ public class StreamsCommand implements CommandExecutor {
                     ResponseStatus status = streamsManager.addStream(player, ids[0], ids[1], StreamPlatform.VK);
                     switch(status) {
                         case SUCCESS:
-                            player.sendMessage(Helper.colored("&6Вы успешно добавили &c&lстрим &6в табло."));
+                            ChatHelper.sendMessage(player, "&aAdvancedStreams &8| &f Стрим был успешно добавлен!");
                             break;
                         case NULL:
                             player.sendMessage(Helper.colored("&6[SCY] &Видео не найдено."));
@@ -59,7 +59,7 @@ public class StreamsCommand implements CommandExecutor {
                     ResponseStatus status = streamsManager.addStream(player, args[1], StreamPlatform.TWITCH);
                     switch(status) {
                         case SUCCESS:
-                            player.sendMessage(Helper.colored("&6Вы успешно добавили &c&lстрим &6в табло."));
+                            ChatHelper.sendMessage(player, "&aAdvancedStreams &8| &f Стрим был успешно добавлен!");
                             break;
                         case NULL:
                             player.sendMessage(Helper.colored("&6[SCY] &Видео не найдено."));
@@ -77,13 +77,12 @@ public class StreamsCommand implements CommandExecutor {
                 if(args[0].equalsIgnoreCase("list")) {
                     player.openInventory(AdvancedStreams.getInstance().getMenu());
                 }
-                if(args[0].equalsIgnoreCase("admin")) {
-                    switch(args[1].toLowerCase()) {
-                        case "all":
-                            ChatHelper.sendMessage(player, streamsManager.getListStreams());
-                            break;
-                    }
+                else {
+                    Helper.sendAvailableComamnd(player);
                 }
+            }
+            else {
+                Helper.sendAvailableComamnd(player);
             }
         }
         return false;
