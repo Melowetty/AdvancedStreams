@@ -1,6 +1,7 @@
 package com.melowetty.advancedstreams.apis;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
+import com.melowetty.advancedstreams.utils.DateHelper;
 import com.melowetty.advancedstreams.utils.Helper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -27,7 +28,7 @@ public class TwitchAPI extends AbstractAPI {
         JSONObject json = Helper.parseURL(curl, ApiKey, clientId);
         JSONArray data = (JSONArray)json.get("data");
         JSONObject items = (JSONObject) data.get(0);
-        return Helper.stringDataToLong( (String) items.get("started_at") );
+        return DateHelper.stringDataToLong( (String) items.get("started_at") );
     }
 
     @Override

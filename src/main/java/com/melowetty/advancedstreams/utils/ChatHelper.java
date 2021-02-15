@@ -10,18 +10,21 @@ import java.util.List;
 
 public class ChatHelper {
     public static void sendMessage(Player player, String... strings) {
+        if (player == null) return;
         for(String str : strings) {
             player.sendMessage(Helper.colored(str));
         }
     }
 
     public static void sendMessage(Player player, List<String> strings) {
+        if (player == null) return;
         for(String str : strings) {
             player.sendMessage(Helper.colored(str));
         }
     }
 
     public static void sendMessage(Player player, String str) {
+        if (player == null) return;
         player.sendMessage(Helper.colored(str));
     }
 
@@ -36,6 +39,7 @@ public class ChatHelper {
     }
 
     public static void sendTextComponent(Player player, TextComponent textComponent) {
+        if (player == null) return;
         player.spigot().sendMessage(textComponent);
     }
 }

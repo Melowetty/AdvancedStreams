@@ -1,10 +1,10 @@
 package com.melowetty.advancedstreams.apis;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
+import com.melowetty.advancedstreams.utils.DateHelper;
 import com.melowetty.advancedstreams.utils.Helper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 public class YouTubeAPI extends AbstractAPI {
     public YouTubeAPI(String id) {
@@ -34,7 +34,7 @@ public class YouTubeAPI extends AbstractAPI {
             JSONObject j1 = (JSONObject)items.get(0);
             JSONObject jStats = (JSONObject)j1.get("liveStreamingDetails");
             String startTime = (String) jStats.get("actualStartTime");
-            return Helper.stringDataToLong(startTime);
+            return DateHelper.stringDataToLong(startTime);
         } catch (Exception e) {
             return null;
         }

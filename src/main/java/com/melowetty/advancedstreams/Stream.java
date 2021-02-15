@@ -1,7 +1,7 @@
 package com.melowetty.advancedstreams;
 
 import com.melowetty.advancedstreams.apis.APITransponder;
-import com.melowetty.advancedstreams.utils.Helper;
+import com.melowetty.advancedstreams.utils.DateHelper;
 import org.bukkit.entity.Player;
 
 public class Stream {
@@ -45,7 +45,7 @@ public class Stream {
     public String getTitle() { return title; }
 
     public String getFormatedDuration() {
-        return Helper.formatDuration(duration);
+        return DateHelper.formatDuration(duration);
     }
 
     public int getViewers() {

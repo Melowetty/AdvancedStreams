@@ -18,30 +18,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 public class Helper {
-    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-    public static String formatDuration(Long duration) {
-        SimpleDateFormat format = new SimpleDateFormat("HHч. mmмин.");
-
-        return format.format(
-                new Date().getTime()
-                - duration);
-    }
-    public static Long stringDataToLong(String nonFormatDuration) {
-        try {
-            return format.parse(nonFormatDuration).getTime();
-        } catch (ParseException e) {
-            debug(e);
-        }
-        return null;
-    }
     public static String objectToString(Object object) {
         return String.valueOf(object);
     }
