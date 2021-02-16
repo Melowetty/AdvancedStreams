@@ -88,7 +88,7 @@ public class Helper {
         }
         return temp;
     }
-    public static void sendAvailableComamnd(Player player) {
+    public static void sendAvailableCommand(Player player) {
         ChatHelper.sendMessage(player, "&aAdvancedStreams &8| &fДоступные команды: ");
         ChatHelper.sendMessage(player, "&a▸ &fДобавление &cYouTube &fстрима - &a/stream YouTube [ссылка]");
         ChatHelper.sendMessage(player, "&a▸ &fДобавление &3VK &fстрима - &a/stream VK [ссылка]");

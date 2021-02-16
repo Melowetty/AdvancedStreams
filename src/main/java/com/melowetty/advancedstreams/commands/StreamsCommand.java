@@ -78,11 +78,11 @@ public class StreamsCommand implements CommandExecutor {
                     player.openInventory(AdvancedStreams.getInstance().getMenu());
                 }
                 else {
-                    Helper.sendAvailableComamnd(player);
+                    Helper.sendAvailableCommand(player);
                 }
             }
             else {
-                Helper.sendAvailableComamnd(player);
+                Helper.sendAvailableCommand(player);
             }
         }
         return false;

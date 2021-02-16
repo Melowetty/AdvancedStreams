@@ -45,7 +45,7 @@ public class Stream {
     public String getTitle() { return title; }
 
     public String getFormatedDuration() {
-        return DateHelper.formatDuration(duration);
+        return DateHelper.formatDuration(duration, platform);
     }
 
     public int getViewers() {
