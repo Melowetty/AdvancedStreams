@@ -2,3 +2,7 @@ name: AdvancedStreams
 version: ${project.version}
 main: com.melowetty.advancedstreams.AdvancedStreams
 authors: [ Melowetty ]
+softdepend: [ PlaceholderAPI ]
+commands:
+  stream:
+    aliases: [ streams ]

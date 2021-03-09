@@ -1,0 +1,71 @@
+debug-mode: TRUE
+cooldown-alerts-active-streams: 600
+cooldown-update-broadcast-info: 10
+api-keys:
+  vk: 8e5455183a96b039e19c2f210733e2e1d74fca873516a52e4721ecf67aa9c920f58103dc8286a6567cde3
+  twitch:
+    access-token: wx0egp8kc5f8xbssbvjzpgmafsoaea
+    client-id: gp762nuuoqcoxypju8c569th9wz7q5
+  youtube: AIzaSyC7yTvMUNk1Qm2wKmNGrszNIti-m6qRCsA
+settings-menu:
+  title: 'Активные стримы | &c%broadcasts-count%'
+  size: 54
+  sort-type: BY_VIEWERS
+  slots-broadcasts: 11-17,20-26,29-35
+format-item-broadcast:
+  max-lenght-title:
+  title: '&e%title%'
+  material: EMERALD
+  meta-id:
+  lore:
+    - ' '
+    - '&l&e● &fСтример: &e%streamer%'
+    - '&l&e● &fЗрителей: &e%viewers%'
+    - '&l&e● &fПлатформа: &c%platform%'
+    - '&l&e● &fПродолжительность: &c%duration%'
+    - ' '
+    - '&l&6▸ &fНажмите, чтобы получить ссылку'
+platform-name:
+  youtube: '&cYou&fTube'
+  twitch: '&dTwitch'
+  vk: '&3ВКонтакте'
+helper-items:
+  'ItemOne':
+      title: '&aЧто это такое?'
+      material: PAPER
+      enchantment: FALSE
+      slot: 4
+      lore:
+        - ' &fЗдесь отображаются стримы'
+        - '&fкоторые в данный момент идут'
+        - '&fна проекте'
+  'ItemTwo':
+    title: '&aКто может добавлять стримы?'
+    material: PAPER
+    enchantment: FALSE
+    slot: 5
+    lore:
+      - ' &fДобавлять стримы могут только'
+      - '&fИгроки со статусом &cYouTube'
+      - '&fили&3 администраторы'
+  'ItemThree':
+    title: '&aЗачем это всё нужно?'
+    material: PAPER
+    enchantment: FALSE
+    slot: 6
+    lore:
+      - ' &fМногие игроки не знают что'
+      - '&fна сервере играют множество популярных'
+      - '&fличностей, которые также хотят'
+      - '&fпоиграть и пообщаться с игроками'
+      - ' &fВы можете посмотреть активные '
+      - '&fстримы и попасть в телик.'
+filling-items:
+  'One':
+      title: '&r'
+      material: STAINED_GLASS_PANE
+      color: AQUA
+      enchantment: TRUE
+      slots: 1-3,7-9,45-54,10,18,19,27,28,36,37
+messages:
+
