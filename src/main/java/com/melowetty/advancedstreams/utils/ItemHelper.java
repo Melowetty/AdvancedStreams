@@ -1,6 +1,6 @@
 package com.melowetty.advancedstreams.utils;
 
-import com.melowetty.advancedstreams.CustomColor;
+import com.melowetty.advancedstreams.enums.CustomColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -28,7 +28,7 @@ public class ItemHelper {
             } else {
                 return Material.getMaterial(material.toUpperCase());
             }
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
 
         return null;

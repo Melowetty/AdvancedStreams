@@ -1,8 +1,8 @@
 package com.melowetty.advancedstreams.commands;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
-import com.melowetty.advancedstreams.ResponseStatus;
-import com.melowetty.advancedstreams.StreamPlatform;
+import com.melowetty.advancedstreams.enums.ResponseStatus;
+import com.melowetty.advancedstreams.enums.StreamPlatform;
 import com.melowetty.advancedstreams.managers.StreamsManager;
 import com.melowetty.advancedstreams.utils.ChatHelper;
 import com.melowetty.advancedstreams.utils.Helper;
@@ -24,19 +24,7 @@ public class StreamsCommand implements CommandExecutor {
                 StreamsManager streamsManager = AdvancedStreams.getInstance().getStreamsManager();
                 if(args[0].equalsIgnoreCase("youtube")) {
                     ResponseStatus status = streamsManager.addStream(player, Helper.getYouTubeVideoID(args[1]), StreamPlatform.YOUTUBE);
-                    switch(status) {
-                        case SUCCESS:
-                            ChatHelper.sendMessage(player, "&aAdvancedStreams &8| &f Стрим был успешно добавлен!");
-                            break;
-                        case NULL:
-                            player.sendMessage(Helper.colored("&6[SCY] &Видео не найдено."));
-                            break;
-                        case OVERFLOW:
-                            player.sendMessage(Helper.colored("&cВ табло максимальное количество прямых трансляций"));
-                            break;
-                        default:
-                            player.sendMessage(Helper.colored("&6[SCY] &4Произошла неопределнная ошибка."));
-                    }
+                    messageFromStatus(player, status);
                 }
                 if(args[0].equalsIgnoreCase("vk")) {
                     String[] ids = Helper.getVKIds(args[1]);
@@ -57,19 +45,7 @@ public class StreamsCommand implements CommandExecutor {
                 }
                 if(args[0].equalsIgnoreCase("twitch")) {
                     ResponseStatus status = streamsManager.addStream(player, args[1], StreamPlatform.TWITCH);
-                    switch(status) {
-                        case SUCCESS:
-                            ChatHelper.sendMessage(player, "&aAdvancedStreams &8| &f Стрим был успешно добавлен!");
-                            break;
-                        case NULL:
-                            player.sendMessage(Helper.colored("&6[SCY] &Видео не найдено."));
-                            break;
-                        case OVERFLOW:
-                            player.sendMessage(Helper.colored("&cВ табло максимальное количество прямых трансляций"));
-                            break;
-                        default:
-                            player.sendMessage(Helper.colored("&6[SCY] &4Произошла неопределнная ошибка."));
-                    }
+                    messageFromStatus(player, status);
                 }
                 if(args[0].equalsIgnoreCase("delete")) {
                     streamsManager.deleteStream(args[1]);
@@ -86,5 +62,21 @@ public class StreamsCommand implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    private void messageFromStatus(Player player, ResponseStatus status) {
+        switch(status) {
+            case SUCCESS:
+                ChatHelper.sendMessage(player, "&aAdvancedStreams &8| &f Стрим был успешно добавлен!");
+                break;
+            case NULL:
+                player.sendMessage(Helper.colored("&6[SCY] &Видео не найдено."));
+                break;
+            case OVERFLOW:
+                player.sendMessage(Helper.colored("&cВ табло максимальное количество прямых трансляций"));
+                break;
+            default:
+                player.sendMessage(Helper.colored("&6[SCY] &4Произошла неопределнная ошибка."));
+        }
     }
 }

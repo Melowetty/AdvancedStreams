@@ -1,7 +1,12 @@
 package com.melowetty.advancedstreams.managers;
 
-import com.melowetty.advancedstreams.*;
+import com.melowetty.advancedstreams.AdvancedStreams;
+import com.melowetty.advancedstreams.Stream;
 import com.melowetty.advancedstreams.apis.APITransponder;
+import com.melowetty.advancedstreams.enums.RemoveReason;
+import com.melowetty.advancedstreams.enums.ResponseStatus;
+import com.melowetty.advancedstreams.enums.SortType;
+import com.melowetty.advancedstreams.enums.StreamPlatform;
 import com.melowetty.advancedstreams.events.AddStreamEvent;
 import com.melowetty.advancedstreams.events.RemoveStreamEvent;
 import com.melowetty.advancedstreams.utils.Helper;

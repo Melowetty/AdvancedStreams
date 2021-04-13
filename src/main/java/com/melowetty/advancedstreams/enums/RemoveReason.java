@@ -1,4 +1,4 @@
-package com.melowetty.advancedstreams;
+package com.melowetty.advancedstreams.enums;
 
 public enum RemoveReason {
     END, DELETED

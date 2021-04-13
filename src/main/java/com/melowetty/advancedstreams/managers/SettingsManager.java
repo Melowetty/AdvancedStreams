@@ -1,7 +1,7 @@
 package com.melowetty.advancedstreams.managers;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
-import com.melowetty.advancedstreams.SortType;
+import com.melowetty.advancedstreams.enums.SortType;
 import com.melowetty.advancedstreams.utils.Helper;
 import com.melowetty.advancedstreams.utils.ItemHelper;
 import org.bukkit.Material;

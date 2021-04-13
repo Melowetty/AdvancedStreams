@@ -1,6 +1,6 @@
 package com.melowetty.advancedstreams.utils;
 
-import com.melowetty.advancedstreams.ResponseStatus;
+import com.melowetty.advancedstreams.enums.ResponseStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

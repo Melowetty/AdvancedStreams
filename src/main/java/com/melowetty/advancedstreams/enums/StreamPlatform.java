@@ -1,4 +1,6 @@
-package com.melowetty.advancedstreams;
+package com.melowetty.advancedstreams.enums;
+
+import com.melowetty.advancedstreams.AdvancedStreams;
 
 public enum StreamPlatform {
     YOUTUBE(AdvancedStreams.getInstance().getSettingsManager().getYoutubeName()),

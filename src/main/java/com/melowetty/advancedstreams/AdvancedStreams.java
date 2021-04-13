@@ -36,6 +36,8 @@ public final class AdvancedStreams extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new ClickInventoryEvent(),this);
 
+        timersManager.start();
+
     }
     @Override
     public void onDisable() {

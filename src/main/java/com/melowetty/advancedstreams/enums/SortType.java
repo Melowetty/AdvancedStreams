@@ -1,4 +1,4 @@
-package com.melowetty.advancedstreams;
+package com.melowetty.advancedstreams.enums;
 
 public enum SortType {
     BY_DURATION("По продолжительности"),

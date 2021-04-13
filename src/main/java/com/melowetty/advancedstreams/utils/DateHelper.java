@@ -1,6 +1,6 @@
 package com.melowetty.advancedstreams.utils;
 
-import com.melowetty.advancedstreams.StreamPlatform;
+import com.melowetty.advancedstreams.enums.StreamPlatform;
 import org.json.simple.JSONObject;
 
 import java.text.ParseException;

@@ -1,8 +1,8 @@
 package com.melowetty.advancedstreams.utils;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
-import com.melowetty.advancedstreams.CustomColor;
 import com.melowetty.advancedstreams.Stream;
+import com.melowetty.advancedstreams.enums.CustomColor;
 import com.melowetty.advancedstreams.managers.SettingsManager;
 import com.melowetty.advancedstreams.managers.StreamsManager;
 import org.bukkit.ChatColor;

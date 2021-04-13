@@ -12,13 +12,15 @@ public class TimersManager {
         plugin = AdvancedStreams.getInstance();
         streamsManager = plugin.getStreamsManager();
         settings = plugin.getSettingsManager();
+    }
+    public void start() {
         startTimerEveryTenSeconds();
         startTimerEveryTenMinutes();
     }
     public void startTimerEveryTenSeconds() {
-        Bukkit.getScheduler().runTaskTimer(plugin, streamsManager::refreshBroadcastsInfo, 0, settings.getCooldownUpdateBroadcastInfo() * 20L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, streamsManager::refreshBroadcastsInfo, 0, settings.getCooldownUpdateBroadcastInfo() * 20L);
     }
     public void startTimerEveryTenMinutes() {
-        Bukkit.getScheduler().runTaskTimer(plugin, streamsManager::notificationsAboutCurrentBroadcasts, 0,settings.getCooldownAlerts() * 20L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, streamsManager::notificationsAboutCurrentBroadcasts, 0,settings.getCooldownAlerts() * 20L);
     }
 }

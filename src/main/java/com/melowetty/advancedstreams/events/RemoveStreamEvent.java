@@ -1,7 +1,7 @@
 package com.melowetty.advancedstreams.events;
 
-import com.melowetty.advancedstreams.RemoveReason;
 import com.melowetty.advancedstreams.Stream;
+import com.melowetty.advancedstreams.enums.RemoveReason;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

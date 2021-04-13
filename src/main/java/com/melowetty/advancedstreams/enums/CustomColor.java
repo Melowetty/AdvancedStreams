@@ -1,4 +1,4 @@
-package com.melowetty.advancedstreams;
+package com.melowetty.advancedstreams.enums;
 
 import org.bukkit.Color;
 import org.bukkit.DyeColor;

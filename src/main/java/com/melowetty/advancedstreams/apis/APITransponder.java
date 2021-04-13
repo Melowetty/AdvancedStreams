@@ -1,7 +1,7 @@
 package com.melowetty.advancedstreams.apis;
 
 import com.melowetty.advancedstreams.Stream;
-import com.melowetty.advancedstreams.StreamPlatform;
+import com.melowetty.advancedstreams.enums.StreamPlatform;
 
 public class APITransponder {
     private Stream stream;
