@@ -119,6 +119,7 @@ public class StreamsManager {
         }
     }
     public void notificationsAboutCurrentBroadcasts() {
+        if(streams.size() == 0) return;
         for (Player player: plugin.getServer().getOnlinePlayers()) {
             ChatHelper.sendMessage(player, "&fAdvancedStreams &8> &aНа сервере идёт " + streams.size() + " стрим! Напишите &a&l/streams &aдля просмотра");
         }
