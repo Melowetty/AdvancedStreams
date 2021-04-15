@@ -37,7 +37,7 @@ public final class SettingsManager {
 
     private boolean debugMode = false;
 
-    private int menuSize;
+    private int menuRows;
     private Long cooldownAlerts;
     private Long cooldownUpdateBroadcastInfo;
 
@@ -72,7 +72,7 @@ public final class SettingsManager {
         vkKey = getConfig().getString("api-keys.vk");
 
         menuTitle = Helper.colored(getConfig().getString("settings-menu.title"));
-        menuSize = getConfig().getInt("settings-menu.size");
+        menuRows = getConfig().getInt("settings-menu.rows");
         sortType = SortType.valueOf(getConfig().getString("settings-menu.sort-type"));
         broadcastsPos = Helper.getPositionBroadcasts(getConfig().getString("settings-menu.slots-broadcasts"));
 
@@ -140,8 +140,8 @@ public final class SettingsManager {
         return sortType;
     }
 
-    public int getMenuSize() {
-        return menuSize;
+    public int getMenuRows() {
+        return menuRows;
     }
 
     public String getMenuTitle() {

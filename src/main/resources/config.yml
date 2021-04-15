@@ -9,7 +9,7 @@ api-keys:
   youtube:
 settings-menu:
   title: 'Активные стримы | &c%broadcasts-count%'
-  size: 54
+  rows: 6
   sort-type: BY_VIEWERS
   slots-broadcasts: 11-17,20-26,29-35
 format-item-broadcast:
