@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -253,16 +254,13 @@ public class Helper {
         ArrayList<String> content = new ArrayList<>();
         try {
             URL url = new URL(curl);
-            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
             String Line;
             while ((Line = in.readLine()) != null)
                 content.add(Line);
             in.close();
-            return content;
-        } catch (Exception e) {
-            Helper.debug(e);
-            return content;
-        }
+        } catch (Exception ignored) {}
+        return content;
     }
     public static ArrayList<String> getContent(String curl, String accessToken, String clientId) {
         ArrayList<String> content = new ArrayList<>();
@@ -278,9 +276,7 @@ public class Helper {
                 content.add(Line);
             http.disconnect();
         }
-        catch (Exception e) {
-            Helper.debug(e);
-        }
+        catch (Exception ignored) {}
         return content;
     }
     public static String arrayListToString(ArrayList<String> list) {
