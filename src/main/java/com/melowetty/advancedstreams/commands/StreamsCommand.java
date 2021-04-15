@@ -61,6 +61,9 @@ public class StreamsCommand implements CommandExecutor {
                 Helper.sendAvailableCommand(player);
             }
         }
+        if(cmd.getName().equalsIgnoreCase("streams")) {
+            player.openInventory(AdvancedStreams.getInstance().getMenu().getInventory());
+        }
         return false;
     }
 

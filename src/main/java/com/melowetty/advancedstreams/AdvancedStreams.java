@@ -33,6 +33,7 @@ public final class AdvancedStreams extends JavaPlugin {
         placeholderConnect = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
 
         this.getCommand("stream").setExecutor(new StreamsCommand());
+        this.getCommand("streams").setExecutor(new StreamsCommand());
 
         Bukkit.getPluginManager().registerEvents(new ClickListener(), this);
 
