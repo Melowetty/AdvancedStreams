@@ -10,6 +10,7 @@ import com.melowetty.advancedstreams.enums.StreamPlatform;
 import com.melowetty.advancedstreams.events.AddStreamEvent;
 import com.melowetty.advancedstreams.events.RemoveStreamEvent;
 import com.melowetty.advancedstreams.events.UpdateStreamsEvent;
+import com.melowetty.advancedstreams.utils.ChatHelper;
 import com.melowetty.advancedstreams.utils.Helper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -114,7 +115,9 @@ public class StreamsManager {
         }
     }
     public void notificationsAboutCurrentBroadcasts() {
-        // to upgrade
+        for (Player player: plugin.getServer().getOnlinePlayers()) {
+            ChatHelper.sendMessage(player, "&fAdvancedStreams &8> &aНа сервере идёт " + streams.size() + " стрим! Напишите &a&l/streams &aдля просмотра");
+        }
     }
     public void refreshBroadcastsInfo() {
         int deletedStreams = 0;
