@@ -9,6 +9,7 @@ import com.melowetty.advancedstreams.enums.SortType;
 import com.melowetty.advancedstreams.enums.StreamPlatform;
 import com.melowetty.advancedstreams.events.AddStreamEvent;
 import com.melowetty.advancedstreams.events.RemoveStreamEvent;
+import com.melowetty.advancedstreams.events.UpdateStreamsEvent;
 import com.melowetty.advancedstreams.utils.Helper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -134,6 +135,9 @@ public class StreamsManager {
             plugin.fullRefreshMenu();
         else if(!getAllStreams().isEmpty())
             plugin.refreshMenu();
+
+        UpdateStreamsEvent event = new UpdateStreamsEvent(getAllStreams());
+        Bukkit.getServer().getPluginManager().callEvent(event);
     }
 
     public Stream getStreamWithSlot(int slot) {
