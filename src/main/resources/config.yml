@@ -13,8 +13,8 @@ settings-menu:
   sort-type: BY_VIEWERS
   slots-broadcasts: 11-17,20-26,29-35
 format-item-broadcast:
-  max-lenght-title:
   title: '&e%title%'
+  max-length-title: 64
   material: EMERALD
   meta-id:
   lore:

@@ -302,11 +302,14 @@ public class Helper {
         if(!url.contains("vk.com")) return null;
         if(url.contains("%2F")) {
             url = url.substring(url.lastIndexOf("video")+5, url.indexOf("%2F"));
-            return url.split("_");
         }
         else {
             url = url.substring(url.lastIndexOf("video")+5);
-            return url.split("_");
         }
+        return url.split("_");
+    }
+    public static String formatTitle(String title, SettingsManager manager) {
+        if (title.length() > manager.getLengthTitle()) return title.substring(0, manager.getLengthTitle()) + "...";
+        else return title;
     }
 }

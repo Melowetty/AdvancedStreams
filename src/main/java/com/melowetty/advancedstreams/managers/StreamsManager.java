@@ -52,6 +52,8 @@ public class StreamsManager {
         if(title == null)
             return ResponseStatus.ERROR;
 
+        title = Helper.formatTitle(title, plugin.getSettingsManager());
+
         Stream stream = new Stream(youtuber, id, title, streamPlatform);
         streams.put(youtuber.getName().toLowerCase(),stream);
         plugin.fullRefreshMenu();
@@ -69,6 +71,8 @@ public class StreamsManager {
 
         if(title == null)
             return ResponseStatus.ERROR;
+
+        title = Helper.formatTitle(title, plugin.getSettingsManager());
 
         Stream stream = new Stream(youtuber, ownerId, id, title, streamPlatform);
         streams.put(youtuber.getName().toLowerCase(),stream);

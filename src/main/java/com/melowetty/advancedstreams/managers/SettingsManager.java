@@ -38,6 +38,7 @@ public final class SettingsManager {
     private boolean debugMode = false;
 
     private int menuRows;
+    private int lengthTitle;
     private Long cooldownAlerts;
     private Long cooldownUpdateBroadcastInfo;
 
@@ -81,6 +82,7 @@ public final class SettingsManager {
         vkName = Helper.colored(getConfig().getString("platform-name.vk"));
 
         streamMaterial = ItemHelper.parseMaterial(getConfig().getString("format-item-broadcast.material"));
+        lengthTitle = getConfig().getInt("format-item-broadcast.max-length-title");
 
         if(Helper.cfgToHashMap(getConfig(), "helper-items") != null)
             helperItems = Helper.cfgToHashMap(getConfig(), "helper-items");
@@ -170,5 +172,9 @@ public final class SettingsManager {
 
     public List<Integer> getBroadcastsPos() {
         return broadcastsPos;
+    }
+
+    public int getLengthTitle() {
+        return lengthTitle;
     }
 }
