@@ -131,11 +131,11 @@ public class Helper {
     public static String getLink(Stream stream) {
         switch (stream.getPlatform()) {
             case YOUTUBE:
-                return "https://youtu.be/" + stream.getID();
+                return "https://youtu.be/" + stream.getId();
             case VK:
-                return "https://vk.com/video" + stream.getOwnerID() + "_" + stream.getID();
+                return "https://vk.com/video" + stream.getOwnerId() + "_" + stream.getId();
             case TWITCH:
-                return "https://twitch.tv/" + stream.getID();
+                return "https://twitch.tv/" + stream.getId();
             default:
                 return null;
         }
@@ -243,7 +243,7 @@ public class Helper {
     }
     public static HashMap<String, String> getPlaceholders(Stream stream) {
         HashMap<String, String> out = new HashMap<>();
-        out.put("%streamer%", stream.getYouTuber().getName());
+        out.put("%streamer%", stream.getYoutuber().getName());
         out.put("%duration%", stream.getFormatedDuration());
         out.put("%platform%", stream.getPlatform().toString());
         out.put("%viewers%", String.valueOf(stream.getViewers()));

@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 public class VKAPI extends AbstractAPI {
     private final String baseUrl = "https://api.vk.com/method/video.get?owner_Id=%s&videos=%s_%s&access_token=%s&v=5.126";
     public VKAPI(String ownerId, String id) {
-        this.ApiKey = AdvancedStreams.getInstance().getSettingsManager().getVKKey();
+        this.ApiKey = AdvancedStreams.getInstance().getSettingsManager().getVkKey();
         this.ownerId = ownerId;
         this.id = id;
     }

@@ -9,9 +9,9 @@ public class APITransponder {
     private String ownerId;
     public APITransponder(Stream stream) {
         this.platform = stream.getPlatform();
-        this.streamId = stream.getID();
+        this.streamId = stream.getId();
         if(platform == StreamPlatform.VK)
-            ownerId = stream.getOwnerID();
+            ownerId = stream.getOwnerId();
     }
     public APITransponder(StreamPlatform platform, String id) {
         this.platform = platform;

@@ -127,16 +127,16 @@ public class StreamsManager {
     public void refreshBroadcastsInfo() {
         int deletedStreams = 0;
         for(Stream stream : getAllStreams()) {
-            APITransponder API = new APITransponder(stream);
-            if(API.getViewers() == 0 || API.getDuration() == null) {
+            APITransponder Api = new APITransponder(stream);
+            if(Api.getViewers() == 0 || Api.getDuration() == null) {
                 deletedStreams++;
-                streams.remove(stream.getYouTuber().getName());
+                streams.remove(stream.getYoutuber().getName());
                 RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.END);
                 Bukkit.getServer().getPluginManager().callEvent(event);
             }
             else {
-                stream.setViewers(API.getViewers());
-                stream.setDuration(API.getDuration());
+                stream.setViewers(Api.getViewers());
+                stream.setDuration(Api.getDuration());
             }
         }
         if(deletedStreams > 0)

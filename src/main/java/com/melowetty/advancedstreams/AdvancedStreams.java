@@ -39,8 +39,6 @@ public final class AdvancedStreams extends JavaPlugin {
 
         timersManager.start();
 
-        // TODO Переделать обычные инвентари в кастомные для многостраничности и защиты
-
     }
     @Override
     public void onDisable() {

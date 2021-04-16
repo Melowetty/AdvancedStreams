@@ -4,6 +4,7 @@ import com.melowetty.advancedstreams.AdvancedStreams;
 import com.melowetty.advancedstreams.enums.SortType;
 import com.melowetty.advancedstreams.utils.Helper;
 import com.melowetty.advancedstreams.utils.ItemHelper;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+@Getter
 public final class SettingsManager {
     private final AdvancedStreams plugin;
 
@@ -35,7 +37,7 @@ public final class SettingsManager {
     private HashMap<Integer, ItemStack> helperItems;
     private HashMap<Integer, ItemStack> fillingItems;
 
-    private boolean debugMode = false;
+    private boolean isDebug = false;
 
     private int menuRows;
     private int lengthTitle;
@@ -63,7 +65,7 @@ public final class SettingsManager {
             getConfig().options().copyDefaults(true);
         }
 
-        debugMode = getConfig().getBoolean("debug-mode");
+        isDebug = getConfig().getBoolean("debug-mode");
         cooldownAlerts = getConfig().getLong("cooldown-alerts-active-streams");
         cooldownUpdateBroadcastInfo = getConfig().getLong("cooldown-update-broadcast-info");
 
@@ -98,83 +100,9 @@ public final class SettingsManager {
             Helper.debug(e);
         }
     }
-    public FileConfiguration getConfig() {
-        return config;
-    }
-
-    public String getYouTubeKey() {
-        return youtubeKey;
-    }
-
-    public String getTwitchAccessToken() {
-        return twitchAccessToken;
-    }
-
-    public String getTwitchClientID() {
-        return twitchClientId;
-    }
-
-    public String getVKKey() {
-        return vkKey;
-    }
 
     public int getMaxStreamsCount() {
         return broadcastsPos.size();
     }
 
-    public String getVKName() {
-        return vkName;
-    }
-
-    public String getYoutubeName() {
-        return youtubeName;
-    }
-
-    public String getTwitchName() {
-        return twitchName;
-    }
-
-    public boolean isDebug() {
-        return debugMode;
-    }
-
-    public SortType getSortType() {
-        return sortType;
-    }
-
-    public int getMenuRows() {
-        return menuRows;
-    }
-
-    public String getMenuTitle() {
-        return menuTitle;
-    }
-
-    public Long getCooldownAlerts() {
-        return cooldownAlerts;
-    }
-
-    public Long getCooldownUpdateBroadcastInfo() {
-        return cooldownUpdateBroadcastInfo;
-    }
-
-    public HashMap<Integer, ItemStack> getHelperItems() {
-        return helperItems;
-    }
-
-    public HashMap<Integer, ItemStack> getFillingItems() {
-        return fillingItems;
-    }
-
-    public Material getStreamMaterial() {
-        return streamMaterial;
-    }
-
-    public List<Integer> getBroadcastsPos() {
-        return broadcastsPos;
-    }
-
-    public int getLengthTitle() {
-        return lengthTitle;
-    }
 }
