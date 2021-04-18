@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 public class TwitchAPI extends AbstractAPI {
     public TwitchAPI(String id) {
         this.ApiKey = AdvancedStreams.getInstance().getSettingsManager().getTwitchAccessToken();
-        this.clientId = AdvancedStreams.getInstance().getSettingsManager().getTwitchClientID();
+        this.clientId = AdvancedStreams.getInstance().getSettingsManager().getTwitchClientId();
         this.id = id;
     }
 

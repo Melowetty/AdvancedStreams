@@ -44,7 +44,8 @@ public class DateHelper {
         hrStr = (hr < 10) ? String.valueOf(hr) : String.valueOf(hr);
         minStr = (min < 10) ? String.valueOf(min) : String.valueOf(min);
 
-        return hrStr + " часов " + minStr + " минут";
+        if(hr == 0) return minStr + " минут";
+        else return hrStr + " часов " + minStr + " минут";
     }
     protected static Date toGmt0(ZonedDateTime time) {
         ZonedDateTime gmt0 = time.minusSeconds(time.getOffset().getTotalSeconds());

@@ -1,7 +1,8 @@
 package com.melowetty.advancedstreams;
 
 import com.melowetty.advancedstreams.commands.StreamsCommand;
-import com.melowetty.advancedstreams.events.ClickInventoryEvent;
+import com.melowetty.advancedstreams.gui.ClickListener;
+import com.melowetty.advancedstreams.gui.StreamsInventory;
 import com.melowetty.advancedstreams.managers.SettingsManager;
 import com.melowetty.advancedstreams.managers.StreamsManager;
 import com.melowetty.advancedstreams.managers.TimersManager;
@@ -9,7 +10,6 @@ import com.melowetty.advancedstreams.utils.Helper;
 import com.melowetty.advancedstreams.utils.InventoryHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public final class AdvancedStreams extends JavaPlugin {
     private static StreamsManager streamsManager;
     private static TimersManager timersManager;
     private boolean placeholderConnect;
-    private Inventory menu;
+    private StreamsInventory menu;
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -33,8 +33,9 @@ public final class AdvancedStreams extends JavaPlugin {
         placeholderConnect = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
 
         this.getCommand("stream").setExecutor(new StreamsCommand());
+        this.getCommand("streams").setExecutor(new StreamsCommand());
 
-        Bukkit.getPluginManager().registerEvents(new ClickInventoryEvent(),this);
+        Bukkit.getPluginManager().registerEvents(new ClickListener(), this);
 
         timersManager.start();
 
@@ -45,7 +46,7 @@ public final class AdvancedStreams extends JavaPlugin {
     }
 
     public String getNameMenu() {
-        return menu.getName();
+        return menu.getInventory().getName();
     }
 
     public static AdvancedStreams getInstance() {
@@ -65,9 +66,12 @@ public final class AdvancedStreams extends JavaPlugin {
     }
     public void initMenu() {
         try {
-            String title = Helper.formatWithPlaceholder(settingsManager.getMenuTitle(),"%broadcasts-count%", String.valueOf(streamsManager.getAllStreams().size()));
-            int size = settingsManager.getMenuSize();
-            menu = InventoryHelper.builder(title, size)
+            String title = Helper.formatWithPlaceholder(
+                    settingsManager.getMenuTitle(),
+                    "%broadcasts-count%",
+                    String.valueOf(streamsManager.getAllStreams().size()));
+            int rows = settingsManager.getMenuRows();
+            menu = InventoryHelper.builder(rows, title)
                     .withItems(settingsManager.getHelperItems())
                     .withItems(settingsManager.getFillingItems())
                     .build();
@@ -77,20 +81,20 @@ public final class AdvancedStreams extends JavaPlugin {
         }
     }
     public void refreshMenu() {
-        InventoryHelper.fill(menu, Helper.getItemStreams());
+        InventoryHelper.fill(menu.getInventory(), Helper.getItemStreams());
     }
 
-    public Inventory getMenu() {
+    public StreamsInventory getMenu() {
         return menu;
     }
 
     public void fullRefreshMenu() {
-        List<HumanEntity> viewers = menu.getViewers();
+        List<HumanEntity> viewers = menu.getInventory().getViewers();
         initMenu();
         refreshMenu();
         for(HumanEntity player : viewers) {
             player.closeInventory();
-            player.openInventory(menu);
+            player.openInventory(menu.getInventory());
         }
     }
 }
