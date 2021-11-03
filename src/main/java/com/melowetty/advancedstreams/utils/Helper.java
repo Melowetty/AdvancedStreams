@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -130,11 +131,11 @@ public class Helper {
     public static String getLink(Stream stream) {
         switch (stream.getPlatform()) {
             case YOUTUBE:
-                return "https://youtu.be/" + stream.getID();
+                return "https://youtu.be/" + stream.getId();
             case VK:
-                return "https://vk.com/video" + stream.getOwnerID() + "_" + stream.getID();
+                return "https://vk.com/video" + stream.getOwnerId() + "_" + stream.getId();
             case TWITCH:
-                return "https://twitch.tv/" + stream.getID();
+                return "https://twitch.tv/" + stream.getId();
             default:
                 return null;
         }
@@ -242,7 +243,7 @@ public class Helper {
     }
     public static HashMap<String, String> getPlaceholders(Stream stream) {
         HashMap<String, String> out = new HashMap<>();
-        out.put("%streamer%", stream.getYouTuber().getName());
+        out.put("%streamer%", stream.getYoutuber().getName());
         out.put("%duration%", stream.getFormatedDuration());
         out.put("%platform%", stream.getPlatform().toString());
         out.put("%viewers%", String.valueOf(stream.getViewers()));
@@ -253,16 +254,13 @@ public class Helper {
         ArrayList<String> content = new ArrayList<>();
         try {
             URL url = new URL(curl);
-            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
             String Line;
             while ((Line = in.readLine()) != null)
                 content.add(Line);
             in.close();
-            return content;
-        } catch (Exception e) {
-            Helper.debug(e);
-            return content;
-        }
+        } catch (Exception ignored) {}
+        return content;
     }
     public static ArrayList<String> getContent(String curl, String accessToken, String clientId) {
         ArrayList<String> content = new ArrayList<>();
@@ -278,9 +276,7 @@ public class Helper {
                 content.add(Line);
             http.disconnect();
         }
-        catch (Exception e) {
-            Helper.debug(e);
-        }
+        catch (Exception ignored) {}
         return content;
     }
     public static String arrayListToString(ArrayList<String> list) {
@@ -302,11 +298,14 @@ public class Helper {
         if(!url.contains("vk.com")) return null;
         if(url.contains("%2F")) {
             url = url.substring(url.lastIndexOf("video")+5, url.indexOf("%2F"));
-            return url.split("_");
         }
         else {
             url = url.substring(url.lastIndexOf("video")+5);
-            return url.split("_");
         }
+        return url.split("_");
+    }
+    public static String formatTitle(String title, SettingsManager manager) {
+        if (title.length() > manager.getLengthTitle()) return title.substring(0, manager.getLengthTitle()) + "...";
+        else return title;
     }
 }

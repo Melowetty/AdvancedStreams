@@ -51,7 +51,7 @@ public class StreamsCommand implements CommandExecutor {
                     streamsManager.deleteStream(args[1]);
                 }
                 if(args[0].equalsIgnoreCase("list")) {
-                    player.openInventory(AdvancedStreams.getInstance().getMenu());
+                    player.openInventory(AdvancedStreams.getInstance().getMenu().getInventory());
                 }
                 else {
                     Helper.sendAvailableCommand(player);
@@ -60,6 +60,9 @@ public class StreamsCommand implements CommandExecutor {
             else {
                 Helper.sendAvailableCommand(player);
             }
+        }
+        if(cmd.getName().equalsIgnoreCase("streams")) {
+            player.openInventory(AdvancedStreams.getInstance().getMenu().getInventory());
         }
         return false;
     }

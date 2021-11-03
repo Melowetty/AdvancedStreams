@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 
 public class YouTubeAPI extends AbstractAPI {
     public YouTubeAPI(String id) {
-        this.ApiKey = AdvancedStreams.getInstance().getSettingsManager().getYouTubeKey();
+        this.ApiKey = AdvancedStreams.getInstance().getSettingsManager().getYoutubeKey();
         this.id = id;
     }
     @Override

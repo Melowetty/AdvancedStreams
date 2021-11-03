@@ -9,6 +9,8 @@ import com.melowetty.advancedstreams.enums.SortType;
 import com.melowetty.advancedstreams.enums.StreamPlatform;
 import com.melowetty.advancedstreams.events.AddStreamEvent;
 import com.melowetty.advancedstreams.events.RemoveStreamEvent;
+import com.melowetty.advancedstreams.events.UpdateStreamsEvent;
+import com.melowetty.advancedstreams.utils.ChatHelper;
 import com.melowetty.advancedstreams.utils.Helper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -50,6 +52,8 @@ public class StreamsManager {
         if(title == null)
             return ResponseStatus.ERROR;
 
+        title = Helper.formatTitle(title, plugin.getSettingsManager());
+
         Stream stream = new Stream(youtuber, id, title, streamPlatform);
         streams.put(youtuber.getName().toLowerCase(),stream);
         plugin.fullRefreshMenu();
@@ -67,6 +71,8 @@ public class StreamsManager {
 
         if(title == null)
             return ResponseStatus.ERROR;
+
+        title = Helper.formatTitle(title, plugin.getSettingsManager());
 
         Stream stream = new Stream(youtuber, ownerId, id, title, streamPlatform);
         streams.put(youtuber.getName().toLowerCase(),stream);
@@ -113,27 +119,33 @@ public class StreamsManager {
         }
     }
     public void notificationsAboutCurrentBroadcasts() {
-        // to upgrade
+        if(streams.size() == 0) return;
+        for (Player player: plugin.getServer().getOnlinePlayers()) {
+            ChatHelper.sendMessage(player, "&fAdvancedStreams &8> &aНа сервере идёт " + streams.size() + " стрим! Напишите &a&l/streams &aдля просмотра");
+        }
     }
     public void refreshBroadcastsInfo() {
         int deletedStreams = 0;
         for(Stream stream : getAllStreams()) {
-            APITransponder API = new APITransponder(stream);
-            if(API.getViewers() == 0 || API.getDuration() == null) {
+            APITransponder Api = new APITransponder(stream);
+            if(Api.getViewers() == 0 || Api.getDuration() == null) {
                 deletedStreams++;
-                streams.remove(stream.getYouTuber().getName());
+                streams.remove(stream.getYoutuber().getName());
                 RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.END);
                 Bukkit.getServer().getPluginManager().callEvent(event);
             }
             else {
-                stream.setViewers(API.getViewers());
-                stream.setDuration(API.getDuration());
+                stream.setViewers(Api.getViewers());
+                stream.setDuration(Api.getDuration());
             }
         }
         if(deletedStreams > 0)
             plugin.fullRefreshMenu();
         else if(!getAllStreams().isEmpty())
             plugin.refreshMenu();
+
+        UpdateStreamsEvent event = new UpdateStreamsEvent(getAllStreams());
+        Bukkit.getServer().getPluginManager().callEvent(event);
     }
 
     public Stream getStreamWithSlot(int slot) {
