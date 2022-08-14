@@ -1,6 +1,5 @@
 package com.melowetty.advancedstreams.utils;
 
-import com.melowetty.advancedstreams.enums.ResponseStatus;
 import com.melowetty.advancedstreams.gui.StreamsInventory;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public class InventoryHelper {
     public static void fill(Inventory inventory, Material material, boolean reverse, int[] temp) {
-        if(temp==null) return;
+        if(temp == null) return;
         ArrayList<Integer> nums = Helper.convertListToArrayList(temp);
         for(int i = 0; i < inventory.getSize(); i++) {
             if(reverse) {
@@ -25,29 +24,25 @@ public class InventoryHelper {
         }
     }
 
-    public static ResponseStatus fill(Inventory inv, HashMap<Integer,ItemStack> items) {
+    public static void fill(Inventory inv, HashMap<Integer,ItemStack> items) {
         try {
             for(Integer pos : items.keySet()) {
                 inv.setItem(pos,items.get(pos));
             }
-            return ResponseStatus.SUCCESS;
         }
         catch (Exception e) {
-            Helper.debug(e);
-            return ResponseStatus.NULL;
+            e.printStackTrace();
         }
     }
 
-    public static ResponseStatus fill(Inventory inv, List<ItemStack> items) {
+    public static void fill(Inventory inv, List<ItemStack> items) {
         try {
             for(ItemStack item : items) {
                 inv.addItem(item);
             }
-            return ResponseStatus.SUCCESS;
         }
         catch (Exception e) {
-            Helper.debug(e);
-            return ResponseStatus.NULL;
+            e.printStackTrace();
         }
     }
 

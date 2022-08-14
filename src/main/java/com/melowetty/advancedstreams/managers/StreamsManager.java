@@ -44,52 +44,71 @@ public class StreamsManager {
     }
 
     public ResponseStatus addStream(final Player youtuber, final String id, final StreamPlatform streamPlatform) {
-        if(AdvancedStreams.getInstance().getSettingsManager().getMaxStreamsCount() == streams.size())
-            return ResponseStatus.OVERFLOW;
+        try {
+            if (AdvancedStreams.getInstance().getSettingsManager().getMaxStreamsCount() == streams.size())
+                return ResponseStatus.OVERFLOW;
 
-        String title = new APITransponder(streamPlatform, id).getTitle();
+            String title = new APITransponder(streamPlatform, id).getTitle();
 
-        if(title == null)
-            return ResponseStatus.ERROR;
+            if (title == null)
+                return ResponseStatus.NOT_FOUND;
 
-        title = Helper.formatTitle(title, plugin.getSettingsManager());
+            title = Helper.formatTitle(title, plugin.getSettingsManager());
 
-        Stream stream = new Stream(youtuber, id, title, streamPlatform);
-        streams.put(youtuber.getName().toLowerCase(),stream);
-        plugin.fullRefreshMenu();
-        AddStreamEvent event = new AddStreamEvent(stream);
-        Bukkit.getServer().getPluginManager().callEvent(event);
-        sortedStreams = Helper.getSortedStreams();
-        return ResponseStatus.SUCCESS;
+            Stream stream = new Stream(youtuber, id, title, streamPlatform);
+            streams.put(youtuber.getName().toLowerCase(), stream);
+            plugin.fullRefreshMenu();
+            AddStreamEvent event = new AddStreamEvent(stream);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+            sortedStreams = Helper.getSortedStreams();
+            return ResponseStatus.SUCCESSFUL_ADDED;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseStatus.UNDEFINED;
+        }
     }
 
     public ResponseStatus addStream(final Player youtuber, final String ownerId, final String id, final StreamPlatform streamPlatform) {
-        if(AdvancedStreams.getInstance().getSettingsManager().getMaxStreamsCount() == streams.size())
-            return ResponseStatus.OVERFLOW;
+        try {
+            if (AdvancedStreams.getInstance().getSettingsManager().getMaxStreamsCount() == streams.size())
+                return ResponseStatus.OVERFLOW;
 
-        String title = new APITransponder(streamPlatform, ownerId, id).getTitle();
+            String title = new APITransponder(streamPlatform, ownerId, id).getTitle();
 
-        if(title == null)
-            return ResponseStatus.ERROR;
+            if (title == null)
+                return ResponseStatus.NOT_FOUND;
 
-        title = Helper.formatTitle(title, plugin.getSettingsManager());
+            title = Helper.formatTitle(title, plugin.getSettingsManager());
 
-        Stream stream = new Stream(youtuber, ownerId, id, title, streamPlatform);
-        streams.put(youtuber.getName().toLowerCase(),stream);
-        plugin.fullRefreshMenu();
-        AddStreamEvent event = new AddStreamEvent(stream);
-        Bukkit.getServer().getPluginManager().callEvent(event);
-        sortedStreams = Helper.getSortedStreams();
-        return ResponseStatus.SUCCESS;
-    }
-    public void deleteStream(String youtuber) {
-        Stream stream = streams.get(youtuber);
-        streams.remove(youtuber.toLowerCase());
-        plugin.fullRefreshMenu();
-        RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.DELETED);
-        Bukkit.getServer().getPluginManager().callEvent(event);
-        if(streams.size() != 0)
+            Stream stream = new Stream(youtuber, ownerId, id, title, streamPlatform);
+            streams.put(youtuber.getName().toLowerCase(), stream);
+            plugin.fullRefreshMenu();
+            AddStreamEvent event = new AddStreamEvent(stream);
+            Bukkit.getServer().getPluginManager().callEvent(event);
             sortedStreams = Helper.getSortedStreams();
+            return ResponseStatus.SUCCESSFUL_ADDED;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseStatus.UNDEFINED;
+        }
+    }
+    public ResponseStatus deleteStream(String youtuber) {
+        try {
+            Stream stream = getStream(youtuber);
+            if (stream == null) {
+                return ResponseStatus.NOT_FOUND;
+            }
+            streams.remove(youtuber.toLowerCase());
+            plugin.fullRefreshMenu();
+            RemoveStreamEvent event = new RemoveStreamEvent(stream, RemoveReason.DELETED);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+            if (streams.size() != 0)
+                sortedStreams = Helper.getSortedStreams();
+            return ResponseStatus.SUCCESSFUL_DELETED;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseStatus.UNDEFINED;
+        }
 
     }
     public Stream getStream(String youtuber) {

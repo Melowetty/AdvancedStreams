@@ -8,7 +8,6 @@ import com.melowetty.advancedstreams.managers.StreamsManager;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
@@ -88,14 +87,6 @@ public class Helper {
             temp.put(settingsManager.getBroadcastsPos().get(i), streams.get(i));
         }
         return temp;
-    }
-    public static void sendAvailableCommand(Player player) {
-        ChatHelper.sendMessage(player, "&aAdvancedStreams &8| &fДоступные команды: ");
-        ChatHelper.sendMessage(player, "&a▸ &fДобавление &cYouTube &fстрима - &a/stream YouTube [ссылка]");
-        ChatHelper.sendMessage(player, "&a▸ &fДобавление &3VK &fстрима - &a/stream VK [ссылка]");
-        ChatHelper.sendMessage(player, "&a▸ &fДобавление &dTwitch &fстрима - &a/stream Twitch [ссылка]");
-        ChatHelper.sendMessage(player, "&a▸ &fСписок стримов - &a/streams");
-        ChatHelper.sendMessage(player, "&a▸ &fУдаление стрима - &a/stream delete [Стример]");
     }
     public static HashMap<Integer, ItemStack> cfgToHashMap(FileConfiguration cfg, String section) {
         HashMap<Integer, ItemStack> items = new HashMap<>();
@@ -228,6 +219,9 @@ public class Helper {
         if(AdvancedStreams.getInstance().getSettingsManager().isDebug())
             e.printStackTrace();
     }
+    public static void log(String str) {
+        AdvancedStreams.getInstance().getLogger().info(str);
+    }
     public static void debug(String str) {
         if(AdvancedStreams.getInstance().getSettingsManager() == null) return;
         if(AdvancedStreams.getInstance().getSettingsManager().isDebug())
@@ -293,6 +287,10 @@ public class Helper {
         else {
             return url.substring(url.lastIndexOf("?v")+3);
         }
+    }
+    public static String getTwitchAccount(String url) {
+        if(!url.contains("twitch.tv")) return null;
+        return url.substring(url.lastIndexOf('/')+1);
     }
     public static String[] getVKIds(String url) {
         if(!url.contains("vk.com")) return null;

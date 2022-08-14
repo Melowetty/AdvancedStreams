@@ -68,4 +68,32 @@ filling-items:
       enchantment: TRUE
       slots: 1-3,7-9,45-54,10,18,19,27,28,36,37
 messages:
+  successful_added: '&aAdvancedStreams &8| &f Стрим был успешно добавлен!'
+  successful_deleted: '&aAdvancedStreams &8| &f Стрим был успешно удалён!'
+  not_found: '&aAdvancedStreams &8| &f Стрим не найден!'
+  overflow: '&aAdvancedStreams &8| &f Нельзя больше добавлять стримы!'
+  incorrect_link: '&aAdvancedStreams &8| &f Неккоректная ссылка!'
+  undefined: '&aAdvancedStreams &8| &f Произошла неопределенная ошибка!'
+  this_platform_not_active: '&aAdvancedStreams &8| &f Эта платформа неактивна!'
+  commands:
+    stream:
+      usage:
+        - '&aAdvancedStreams &8| &fДоступные команды:'
+        - '&a▸ &fДобавление &cYouTube &fстрима - &a/stream YouTube <ссылка>'
+        - '&a▸ &fДобавление &3VK &fстрима - &a/stream VK <ссылка>'
+        - '&a▸ &fДобавление &dTwitch &fстрима - &a/stream Twitch <ссылка>'
+        - '&a▸ &fСписок стримов - &a/stream list'
+        - '&a▸ &fУдаление стрима - &a/stream delete <стример>'
+      youtube:
+        usage:
+          - '&a▸ &fИспользуйте: &a/stream youtube &e<ссылка>'
+      twitch:
+        usage:
+          - '&a▸ &fИспользуйте: &a/stream twitch &e<ссылка>'
+      vk:
+        usage:
+          - '&a▸ &fИспользуйте: &a/stream vk &e<ссылка>'
+      delete:
+        usage:
+          - '&a▸ &fИспользуйте: &a/stream delete &e<стример>'
 

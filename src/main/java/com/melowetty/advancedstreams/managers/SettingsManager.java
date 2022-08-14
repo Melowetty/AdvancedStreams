@@ -32,6 +32,18 @@ public final class SettingsManager {
     private String twitchName;
     private String vkName;
     private String menuTitle;
+    private String messageSuccessfulAdded;
+    private String messageSuccessfulDeleted;
+    private String messageNotFound;
+    private String messageOverflow;
+    private String messageIncorrectLink;
+    private String messageUndefined;
+    private String messageThisPlatformNotActive;
+    private List<String> messageStreamUsage;
+    private List<String> messageYoutubeUsage;
+    private List<String> messageVkUsage;
+    private List<String> messageTwitchUsage;
+    private List<String> messageStreamDeleteUsage;
 
     private List<Integer> broadcastsPos;
     private HashMap<Integer, ItemStack> helperItems;
@@ -69,19 +81,19 @@ public final class SettingsManager {
         cooldownAlerts = getConfig().getLong("cooldown-alerts-active-streams");
         cooldownUpdateBroadcastInfo = getConfig().getLong("cooldown-update-broadcast-info");
 
-        twitchAccessToken = getConfig().getString("api-keys.twitch.access-token");
-        twitchClientId = getConfig().getString("api-keys.twitch.client-id");
-        youtubeKey = getConfig().getString("api-keys.youtube");
-        vkKey = getConfig().getString("api-keys.vk");
+        twitchAccessToken = getConfig().getString("api-keys.twitch.access-token", "");
+        twitchClientId = getConfig().getString("api-keys.twitch.client-id", "");
+        youtubeKey = getConfig().getString("api-keys.youtube", "");
+        vkKey = getConfig().getString("api-keys.vk", "");
 
         menuTitle = Helper.colored(getConfig().getString("settings-menu.title"));
         menuRows = getConfig().getInt("settings-menu.rows");
         sortType = SortType.valueOf(getConfig().getString("settings-menu.sort-type"));
         broadcastsPos = Helper.getPositionBroadcasts(getConfig().getString("settings-menu.slots-broadcasts"));
 
-        youtubeName = Helper.colored(getConfig().getString("platform-name.youtube"));
-        twitchName = Helper.colored(getConfig().getString("platform-name.twitch"));
-        vkName = Helper.colored(getConfig().getString("platform-name.vk"));
+        youtubeName = Helper.colored(getConfig().getString("platform-name.youtube", "&cYou&fTube"));
+        twitchName = Helper.colored(getConfig().getString("platform-name.twitch", "&dTwitch"));
+        vkName = Helper.colored(getConfig().getString("platform-name.vk", "&3ВКонтакте"));
 
         streamMaterial = ItemHelper.parseMaterial(getConfig().getString("format-item-broadcast.material"));
         lengthTitle = getConfig().getInt("format-item-broadcast.max-length-title");
@@ -90,6 +102,20 @@ public final class SettingsManager {
             helperItems = Helper.cfgToHashMap(getConfig(), "helper-items");
         if(Helper.cfgToHashMap(getConfig(), "filling-items") != null)
             fillingItems = Helper.cfgToHashMap(getConfig(), "filling-items");
+
+        messageSuccessfulAdded = Helper.colored(getConfig().getString("messages.successful_added", "&aAdvancedStreams &8| &f Стрим был успешно добавлен!"));
+        messageSuccessfulDeleted = Helper.colored(getConfig().getString("messages.successful_deleted", "&aAdvancedStreams &8| &f Стрим был успешно удалён!"));
+        messageNotFound = Helper.colored(getConfig().getString("messages.not_found", "&aAdvancedStreams &8| &f Стрим не найден!"));
+        messageOverflow = Helper.colored(getConfig().getString("messages.overflow", "&aAdvancedStreams &8| &f Нельзя больше добавлять стримы!"));
+        messageIncorrectLink = Helper.colored(getConfig().getString("messages.incorrect_link", "&aAdvancedStreams &8| &f Неккоректная ссылка!"));
+        messageUndefined = Helper.colored(getConfig().getString("messages.undefined", "&aAdvancedStreams &8| &f Произошла неопределенная ошибка!"));
+        messageThisPlatformNotActive = Helper.colored(getConfig().getString("messages.this_platform_not_active", "&aAdvancedStreams &8| &f Эта платформа неактивна!"));
+
+        messageStreamUsage = Helper.colored(getConfig().getStringList("messages.commands.stream.usage"));
+        messageYoutubeUsage = Helper.colored(getConfig().getStringList("messages.commands.stream.youtube.usage"));
+        messageVkUsage = Helper.colored(getConfig().getStringList("messages.commands.stream.vk.usage"));
+        messageTwitchUsage = Helper.colored(getConfig().getStringList("messages.commands.stream.twitch.usage"));
+        messageStreamDeleteUsage = Helper.colored(getConfig().getStringList("messages.commands.stream.delete.usage"));
 
         save();
     }
@@ -104,5 +130,16 @@ public final class SettingsManager {
     public int getMaxStreamsCount() {
         return broadcastsPos.size();
     }
-
+    public boolean isApiKeysConfigured() {
+        return twitchAccessToken.isEmpty() && youtubeKey.isEmpty() && vkKey.isEmpty();
+    }
+    public boolean isVkConfigured() {
+        return !(vkKey.isEmpty() && vkName.isEmpty());
+    }
+    public boolean isYoutubeConfigured() {
+        return !(youtubeKey.isEmpty() && youtubeName.isEmpty());
+    }
+    public boolean isTwitchConfigured() {
+        return !(twitchAccessToken.isEmpty() && twitchClientId.isEmpty() && twitchName.isEmpty());
+    }
 }

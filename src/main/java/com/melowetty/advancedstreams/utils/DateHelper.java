@@ -23,7 +23,7 @@ public class DateHelper {
     }
     public static Long getVKServerTime() {
         try {
-            String url = "https://api.vk.com/method/utils.getServerTime?access_token=c98b21a5c98b21a5c98b21a5dfc9fef8cbcc98bc98b21a59672c15b56abbd7f09950db5&v=5.21";
+            String url = "https://api.vk.com/method/utils.getServerTime?access_token=c98b21a5c98b21a5c98b21a5dfc9fef8cbcc98bc98b21a59672c15b56abbd7f09950db5&v=5.131";
             JSONObject json = Helper.parseURL(url);
             return Helper.objectToLong(json.get("response"));
         } catch (NullPointerException e) {
