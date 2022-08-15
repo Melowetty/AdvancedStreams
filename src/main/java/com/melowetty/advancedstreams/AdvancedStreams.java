@@ -1,6 +1,8 @@
 package com.melowetty.advancedstreams;
 
-import com.melowetty.advancedstreams.commands.StreamsCommand;
+import com.melowetty.advancedstreams.commands.CommandManager;
+import com.melowetty.advancedstreams.commands.StreamCommand.StreamCommand;
+import com.melowetty.advancedstreams.commands.StreamsCommand.StreamsCommand;
 import com.melowetty.advancedstreams.gui.ClickListener;
 import com.melowetty.advancedstreams.gui.StreamsInventory;
 import com.melowetty.advancedstreams.managers.SettingsManager;
@@ -19,21 +21,29 @@ public final class AdvancedStreams extends JavaPlugin {
     private static SettingsManager settingsManager;
     private static StreamsManager streamsManager;
     private static TimersManager timersManager;
+    private static CommandManager commandManager;
     private boolean placeholderConnect;
     private StreamsInventory menu;
     @Override
     public void onEnable() {
         INSTANCE = this;
         settingsManager = new SettingsManager();
+        if(settingsManager.isApiKeysConfigured()) {
+            Helper.log("Plugin disabled because api keys not configured.");
+            Helper.log("Please configure any platform.");
+            this.getPluginLoader().disablePlugin(this);
+            return;
+        }
+
         streamsManager = new StreamsManager();
         timersManager = new TimersManager();
+        commandManager = new CommandManager(this);
+        commandManager.addCommand(new StreamsCommand());
+        commandManager.addCommand(new StreamCommand());
 
         initMenu();
 
         placeholderConnect = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
-
-        this.getCommand("stream").setExecutor(new StreamsCommand());
-        this.getCommand("streams").setExecutor(new StreamsCommand());
 
         Bukkit.getPluginManager().registerEvents(new ClickListener(), this);
 
@@ -42,7 +52,7 @@ public final class AdvancedStreams extends JavaPlugin {
     }
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        timersManager.stop();
     }
 
     public String getNameMenu() {
@@ -64,6 +74,11 @@ public final class AdvancedStreams extends JavaPlugin {
     public TimersManager getTimersManager() {
         return timersManager;
     }
+
+    public static CommandManager getCommandManager() {
+        return commandManager;
+    }
+
     public void initMenu() {
         try {
             String title = Helper.formatWithPlaceholder(
