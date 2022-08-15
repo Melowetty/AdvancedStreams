@@ -44,6 +44,7 @@ public final class SettingsManager {
     private List<String> messageVkUsage;
     private List<String> messageTwitchUsage;
     private List<String> messageStreamDeleteUsage;
+    private String messageNotEnoughPermission;
 
     private List<Integer> broadcastsPos;
     private HashMap<Integer, ItemStack> helperItems;
@@ -110,6 +111,7 @@ public final class SettingsManager {
         messageIncorrectLink = Helper.colored(getConfig().getString("messages.incorrect_link", "&aAdvancedStreams &8| &f Неккоректная ссылка!"));
         messageUndefined = Helper.colored(getConfig().getString("messages.undefined", "&aAdvancedStreams &8| &f Произошла неопределенная ошибка!"));
         messageThisPlatformNotActive = Helper.colored(getConfig().getString("messages.this_platform_not_active", "&aAdvancedStreams &8| &f Эта платформа неактивна!"));
+        messageNotEnoughPermission = Helper.colored(getConfig().getString("messages.not_enough_permission", "&aAdvancedStreams &8| &f Недостаточно прав!"));
 
         messageStreamUsage = Helper.colored(getConfig().getStringList("messages.commands.stream.usage"));
         messageYoutubeUsage = Helper.colored(getConfig().getStringList("messages.commands.stream.youtube.usage"));

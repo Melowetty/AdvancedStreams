@@ -75,6 +75,7 @@ messages:
   incorrect_link: '&aAdvancedStreams &8| &f Неккоректная ссылка!'
   undefined: '&aAdvancedStreams &8| &f Произошла неопределенная ошибка!'
   this_platform_not_active: '&aAdvancedStreams &8| &f Эта платформа неактивна!'
+  not_enough_permission: '&aAdvancedStreams &8| &f Недостаточно прав!'
   commands:
     stream:
       usage:
@@ -96,4 +97,3 @@ messages:
       delete:
         usage:
           - '&a▸ &fИспользуйте: &a/stream delete &e<стример>'
-

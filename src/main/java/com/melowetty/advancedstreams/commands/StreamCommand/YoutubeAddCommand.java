@@ -2,6 +2,7 @@ package com.melowetty.advancedstreams.commands.StreamCommand;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
 import com.melowetty.advancedstreams.commands.BaseSubCommand;
+import com.melowetty.advancedstreams.enums.Permission;
 import com.melowetty.advancedstreams.enums.ResponseStatus;
 import com.melowetty.advancedstreams.enums.StreamPlatform;
 import com.melowetty.advancedstreams.utils.Helper;
@@ -9,7 +10,7 @@ import org.bukkit.entity.Player;
 
 public class YoutubeAddCommand extends BaseSubCommand {
     public YoutubeAddCommand() {
-        super("youtube", AdvancedStreams.getInstance().getSettingsManager().getMessageYoutubeUsage(), 1);
+        super("youtube", Permission.STREAM_ADD_YOUTUBE, AdvancedStreams.getInstance().getSettingsManager().getMessageYoutubeUsage(), 1);
     }
 
     @Override
