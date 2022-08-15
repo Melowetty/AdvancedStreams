@@ -92,7 +92,7 @@ public final class AdvancedStreams extends JavaPlugin {
                     .build();
         }
         catch (Exception e) {
-            Helper.debug(e);
+            Helper.log(e);
         }
     }
     public void refreshMenu() {

@@ -20,7 +20,6 @@ public class VKAPI extends AbstractAPI {
             JSONObject jTemp = parse();
             return Helper.objectToInt( jTemp.get("spectators") );
         } catch (Exception e) {
-            Helper.debug(e);
             return 0;
         }
     }
@@ -31,7 +30,6 @@ public class VKAPI extends AbstractAPI {
             JSONObject jTemp = parse();
             return Helper.objectToLong( jTemp.get("date") );
         } catch (Exception e) {
-            Helper.debug(e);
             return null;
         }
     }

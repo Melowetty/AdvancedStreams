@@ -27,7 +27,6 @@ public class DateHelper {
             JSONObject json = Helper.parseURL(url);
             return Helper.objectToLong(json.get("response"));
         } catch (NullPointerException e) {
-            Helper.debug(e);
             return 0L;
         }
     }
@@ -55,9 +54,8 @@ public class DateHelper {
         try {
             return format.parse(nonFormatDuration).getTime();
         } catch (ParseException e) {
-            Helper.debug(e);
+            return null;
         }
-        return null;
     }
     public static String dataToString(Long duration) {
         return format.format(duration);

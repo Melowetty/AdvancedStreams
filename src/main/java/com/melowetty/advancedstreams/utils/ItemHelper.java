@@ -46,8 +46,7 @@ public class ItemHelper {
                 colorableMethod.setAccessible(true);
                 try {
                     colorableMethod.invoke(meta, color.getColor());
-                } catch (Exception e) {
-                    Helper.debug(e);
+                } catch (Exception ignored) {
                 }
             }
         }

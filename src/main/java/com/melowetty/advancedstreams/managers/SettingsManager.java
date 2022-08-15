@@ -50,8 +50,6 @@ public final class SettingsManager {
     private HashMap<Integer, ItemStack> helperItems;
     private HashMap<Integer, ItemStack> fillingItems;
 
-    private boolean isDebug = false;
-
     private int menuRows;
     private int lengthTitle;
     private Long cooldownAlerts;
@@ -78,7 +76,6 @@ public final class SettingsManager {
             getConfig().options().copyDefaults(true);
         }
 
-        isDebug = getConfig().getBoolean("debug-mode");
         cooldownAlerts = getConfig().getLong("cooldown-alerts-active-streams");
         cooldownUpdateBroadcastInfo = getConfig().getLong("cooldown-update-broadcast-info");
 
@@ -125,7 +122,7 @@ public final class SettingsManager {
         try {
             getConfig().save(main);
         } catch (IOException e) {
-            Helper.debug(e);
+            Helper.log(e);
         }
     }
 

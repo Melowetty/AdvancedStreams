@@ -214,18 +214,11 @@ public class Helper {
         }
         return line;
     }
-    public static void debug(Exception e) {
-        if(AdvancedStreams.getInstance().getSettingsManager() == null) return;
-        if(AdvancedStreams.getInstance().getSettingsManager().isDebug())
-            e.printStackTrace();
-    }
     public static void log(String str) {
         AdvancedStreams.getInstance().getLogger().info(str);
     }
-    public static void debug(String str) {
-        if(AdvancedStreams.getInstance().getSettingsManager() == null) return;
-        if(AdvancedStreams.getInstance().getSettingsManager().isDebug())
-            AdvancedStreams.getInstance().getLogger().warning(str);
+    public static void log(Exception exception) {
+        exception.printStackTrace();
     }
     public static CustomColor getColorFromString(String color) {
         try {

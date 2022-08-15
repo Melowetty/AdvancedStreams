@@ -1,12 +1,11 @@
-debug-mode: TRUE
 cooldown-alerts-active-streams: 600
 cooldown-update-broadcast-info: 10
 api-keys:
-  vk: 
+  vk: ''
   twitch:
-    access-token:
-    client-id:
-  youtube:
+    access-token: ''
+    client-id: ''
+  youtube: ''
 settings-menu:
   title: 'Активные стримы | &c%broadcasts-count%'
   rows: 6
