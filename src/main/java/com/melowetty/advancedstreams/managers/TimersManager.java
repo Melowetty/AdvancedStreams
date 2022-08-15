@@ -2,12 +2,15 @@ package com.melowetty.advancedstreams.managers;
 
 import com.melowetty.advancedstreams.AdvancedStreams;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitTask;
 
 
 public class TimersManager {
     private final AdvancedStreams plugin;
     private final StreamsManager streamsManager;
     private final SettingsManager settings;
+    private BukkitTask timerEveryTenSeconds;
+    private BukkitTask timerEveryTenMinutes;
     public TimersManager() {
         plugin = AdvancedStreams.getInstance();
         streamsManager = plugin.getStreamsManager();
@@ -17,10 +20,14 @@ public class TimersManager {
         startTimerEveryTenSeconds();
         startTimerEveryTenMinutes();
     }
-    public void startTimerEveryTenSeconds() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, streamsManager::refreshBroadcastsInfo, 0, settings.getCooldownUpdateBroadcastInfo() * 20L);
+    public void stop() {
+        timerEveryTenSeconds.cancel();
+        timerEveryTenMinutes.cancel();
     }
-    public void startTimerEveryTenMinutes() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, streamsManager::notificationsAboutCurrentBroadcasts, 0,settings.getCooldownAlerts() * 20L);
+    private void startTimerEveryTenSeconds() {
+        timerEveryTenSeconds = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, streamsManager::refreshBroadcastsInfo, 0, settings.getCooldownUpdateBroadcastInfo() * 20L);
+    }
+    private void startTimerEveryTenMinutes() {
+        timerEveryTenMinutes = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, streamsManager::notificationsAboutCurrentBroadcasts, 0,settings.getCooldownAlerts() * 20L);
     }
 }

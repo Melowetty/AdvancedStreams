@@ -52,7 +52,7 @@ public final class AdvancedStreams extends JavaPlugin {
     }
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        timersManager.stop();
     }
 
     public String getNameMenu() {
